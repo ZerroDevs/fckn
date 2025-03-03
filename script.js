@@ -129,10 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Update header style on scroll
-    updateHeaderStyle();
-    window.addEventListener('scroll', updateHeaderStyle);
-    
     // Mobile dropdown functionality
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
@@ -222,6 +218,40 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load dynamic footer
     loadDynamicFooter();
+    
+    // Initialize Live Chat
+    initLiveChat();
+    
+    // Initialize buy buttons to show WhatsApp popup
+    const buyButtons = document.querySelectorAll('.buy-btn');
+    const whatsappPopup = document.getElementById('whatsapp-popup');
+    const closePopup = document.querySelector('.close-popup');
+    
+    if (buyButtons.length > 0 && whatsappPopup) {
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                whatsappPopup.classList.add('active');
+            });
+        });
+        
+        if (closePopup) {
+            closePopup.addEventListener('click', function() {
+                whatsappPopup.classList.remove('active');
+            });
+        }
+        
+        // Close popup when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === whatsappPopup) {
+                whatsappPopup.classList.remove('active');
+            }
+        });
+    }
+    
+    // Update header style on scroll
+    updateHeaderStyle();
+    window.addEventListener('scroll', updateHeaderStyle);
 });
 
 // Function to update header style on scroll
@@ -374,4 +404,76 @@ function initShareNavigation() {
             }
         });
     }
+}
+
+// Initialize Live Chat
+function initLiveChat() {
+    const chatToggle = document.querySelector('.chat-toggle');
+    const chatContainer = document.querySelector('.chat-container');
+    const chatClose = document.querySelector('.chat-close');
+    const chatInput = document.getElementById('chat-message-input');
+    const chatSendBtn = document.getElementById('chat-send-btn');
+    const chatMessages = document.querySelector('.chat-messages');
+    
+    // Toggle chat
+    chatToggle.addEventListener('click', function() {
+        chatContainer.classList.toggle('active');
+        // Focus on input when chat is opened
+        if (chatContainer.classList.contains('active')) {
+            setTimeout(() => chatInput.focus(), 300);
+        }
+    });
+    
+    // Close chat
+    chatClose.addEventListener('click', function() {
+        chatContainer.classList.remove('active');
+    });
+    
+    // Send message function
+    function sendMessage() {
+        const messageText = chatInput.value.trim();
+        if (!messageText) return;
+        
+        // Create user message element
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user';
+        userMessage.innerHTML = `
+            <p>${messageText}</p>
+            <span class="time">الآن</span>
+        `;
+        chatMessages.appendChild(userMessage);
+        
+        // Clear input
+        chatInput.value = '';
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        // Simulate response after a short delay
+        setTimeout(function() {
+            const responseMessage = document.createElement('div');
+            responseMessage.className = 'message system';
+            responseMessage.innerHTML = `
+                <p>شكراً لتواصلك معنا. للحصول على مساعدة فورية، يمكنك التواصل معنا مباشرة عبر واتساب.</p>
+                <span class="time">الآن</span>
+                <a href="https://wa.me/966566310983?text=${encodeURIComponent('مرحباً، لدي استفسار حول ' + messageText)}" target="_blank" class="whatsapp-chat-btn">
+                    <i class="fab fa-whatsapp"></i> متابعة المحادثة عبر واتساب
+                </a>
+            `;
+            chatMessages.appendChild(responseMessage);
+            
+            // Scroll to bottom again
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+    }
+
+    // Send message on button click
+    chatSendBtn.addEventListener('click', sendMessage);
+
+    // Send message on Enter key
+    chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
 } 
