@@ -1,0 +1,78 @@
+{% if section.settings.enable_chat %}
+<div class="chat-widget">
+  <div class="chat-toggle">
+    <i class="fas fa-comments"></i>
+  </div>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h3>{{ section.settings.chat_title }}</h3>
+      <span class="chat-close">&times;</span>
+    </div>
+    <div class="chat-messages">
+      <div class="message system">
+        <p>{{ section.settings.welcome_message }}</p>
+        <span class="time">{{ 'now' | date: '%H:%M' }}</span>
+        <a href="https://wa.me/{{ section.settings.whatsapp_number | remove: '+' }}" target="_blank" class="whatsapp-chat-btn">
+          <i class="fab fa-whatsapp"></i> {{ section.settings.whatsapp_button_text }}
+        </a>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" placeholder="{{ section.settings.input_placeholder }}" id="chat-message-input">
+      <button id="chat-send-btn">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Chat Widget",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_chat",
+      "label": "Enable chat widget",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "chat_title",
+      "label": "Chat title",
+      "default": "المحادثة المباشرة"
+    },
+    {
+      "type": "textarea",
+      "id": "welcome_message",
+      "label": "Welcome message",
+      "default": "مرحباً بك في سوق الأميال السعودي! كيف يمكننا مساعدتك اليوم؟"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number",
+      "default": "966566310983"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_button_text",
+      "label": "WhatsApp button text",
+      "default": "التواصل المباشر عبر واتساب"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Input placeholder",
+      "default": "اكتب رسالتك هنا..."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chat Widget",
+      "category": "Interactive"
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,173 @@
+<section class="miles" id="miles">
+  <div class="container">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+    <p class="section-description">{{ section.settings.description }}</p>
+    
+    <div class="miles-packages">
+      {% for block in section.blocks %}
+        {% if block.type == 'package' %}
+          <div class="package{% if block.settings.featured %} featured{% endif %}" {{ block.shopify_attributes }}>
+            <div class="package-header">
+              <h3>{{ block.settings.title }}</h3>
+              <div class="price">{{ block.settings.price }}</div>
+            </div>
+            <div class="package-content">
+              {% if block.settings.features != blank %}
+                <ul>
+                  {% assign features = block.settings.features | split: ',' %}
+                  {% for feature in features %}
+                    <li>
+                      <i class="fas fa-check-circle"></i> {{ feature | strip }}
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              {% if block.settings.button_text != blank %}
+                <a href="https://wa.me/{{ section.settings.whatsapp_number | remove: '+' }}?text={{ block.settings.whatsapp_message | url_encode }}" target="_blank" class="buy-btn">
+                  {{ block.settings.button_text }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    {% if section.settings.show_highlight %}
+      <div class="miles-highlight">
+        <div class="highlight-icon">
+          <i class="fas fa-{{ section.settings.highlight_icon }}"></i>
+        </div>
+        <h3>{{ section.settings.highlight_title }}</h3>
+        <a href="https://wa.me/{{ section.settings.whatsapp_number | remove: '+' }}?text={{ section.settings.highlight_whatsapp_message | url_encode }}" target="_blank" class="highlight-btn">
+          {{ section.settings.highlight_button_text }} <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Miles Packages",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "باقات الأميال"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section description",
+      "default": "اختر الباقة المناسبة لك من بين مجموعة متنوعة من باقات الأميال بأسعار تنافسية"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number",
+      "default": "966566310983"
+    },
+    {
+      "type": "header",
+      "content": "Highlight Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_highlight",
+      "label": "Show highlight box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "highlight_icon",
+      "label": "Highlight icon",
+      "default": "star",
+      "info": "Enter a Font Awesome icon name (without the fa- prefix)"
+    },
+    {
+      "type": "text",
+      "id": "highlight_title",
+      "label": "Highlight title",
+      "default": "هل تبحث عن باقة مخصصة؟"
+    },
+    {
+      "type": "text",
+      "id": "highlight_button_text",
+      "label": "Highlight button text",
+      "default": "تواصل معنا"
+    },
+    {
+      "type": "text",
+      "id": "highlight_whatsapp_message",
+      "label": "Highlight WhatsApp message",
+      "default": "مرحباً، أرغب في الاستفسار عن باقة مخصصة من الأميال"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "package",
+      "name": "Package",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Package title",
+          "default": "باقة الأميال"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "500 ريال"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features (comma separated)",
+          "default": "10,000 ميل, صلاحية لمدة سنتين, دعم فني على مدار الساعة"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "اشتر الآن"
+        },
+        {
+          "type": "text",
+          "id": "whatsapp_message",
+          "label": "WhatsApp message",
+          "default": "مرحباً، أرغب في شراء باقة الأميال"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured package",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Miles Packages",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "package"
+        },
+        {
+          "type": "package",
+          "settings": {
+            "featured": true
+          }
+        },
+        {
+          "type": "package"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

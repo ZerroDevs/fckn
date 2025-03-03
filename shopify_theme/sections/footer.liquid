@@ -1,0 +1,144 @@
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        {% if section.settings.footer_logo != blank %}
+          <img src="{{ section.settings.footer_logo | img_url: 'master' }}" alt="{{ shop.name }}">
+        {% else %}
+          <img src="{{ 'saudi1.png' | asset_url }}" alt="{{ shop.name }}">
+        {% endif %}
+        <p>{{ section.settings.footer_text }}</p>
+      </div>
+      
+      <div class="footer-links">
+        {% for block in section.blocks %}
+          {% if block.type == 'link_list' %}
+            <div class="link-group">
+              <h3>{{ block.settings.title }}</h3>
+              {% if block.settings.menu != blank %}
+                <ul>
+                  {% for link in block.settings.menu.links %}
+                    <li>
+                      <a href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>{{ section.settings.copyright_text | default: settings.footer_copyright }}</p>
+      
+      <div class="payment-methods">
+        {% if section.settings.show_payment_icons %}
+          {% for block in section.blocks %}
+            {% if block.type == 'payment_icon' %}
+              <div class="bank-logo">
+                {% if block.settings.payment_icon_image != blank %}
+                  <img src="{{ block.settings.payment_icon_image | img_url: 'master' }}" alt="{{ block.settings.payment_icon_name }}">
+                {% endif %}
+                <div class="bank-tooltip">
+                  <div class="bank-name">
+                    <i class="fas fa-check-circle"></i>
+                    {{ block.settings.payment_icon_name }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "سوق الأميال السعودي هو المكان الأمثل لشراء وبيع أميال الخطوط الجوية السعودية بأفضل الأسعار وبطريقة آمنة وموثوقة."
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "© 2024 سوق الأميال السعودي. جميع الحقوق محفوظة."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Quick links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "payment_icon",
+      "name": "Payment Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "payment_icon_image",
+          "label": "Payment icon image"
+        },
+        {
+          "type": "text",
+          "id": "payment_icon_name",
+          "label": "Payment method name",
+          "default": "Bank name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "link_list"
+        },
+        {
+          "type": "link_list"
+        },
+        {
+          "type": "payment_icon"
+        },
+        {
+          "type": "payment_icon"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

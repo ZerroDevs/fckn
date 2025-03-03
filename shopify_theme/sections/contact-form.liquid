@@ -1,0 +1,213 @@
+<section class="contact" id="contact">
+  <div class="container">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+    <p class="section-description">{{ section.settings.description }}</p>
+    
+    <div class="contact-content">
+      <div class="contact-form">
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <div class="form-success">
+              {{ section.settings.success_message }}
+            </div>
+          {% endif %}
+          
+          {% if form.errors %}
+            <div class="form-error">
+              {{ section.settings.error_message }}
+            </div>
+          {% endif %}
+          
+          <div class="form-group">
+            <input type="text" name="contact[name]" id="ContactFormName" placeholder="{{ section.settings.name_placeholder }}" value="{{ form.name }}" required>
+          </div>
+          
+          <div class="form-group">
+            <input type="email" name="contact[email]" id="ContactFormEmail" placeholder="{{ section.settings.email_placeholder }}" value="{{ form.email }}" required>
+          </div>
+          
+          <div class="form-group">
+            <input type="tel" name="contact[phone]" id="ContactFormPhone" placeholder="{{ section.settings.phone_placeholder }}" value="{{ form.phone }}">
+          </div>
+          
+          <div class="form-group">
+            <textarea name="contact[body]" id="ContactFormMessage" placeholder="{{ section.settings.message_placeholder }}" rows="5" required>{{ form.body }}</textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">
+            {{ section.settings.submit_text }}
+          </button>
+        {% endform %}
+      </div>
+      
+      <div class="contact-info">
+        <div class="social-media">
+          {% if section.settings.whatsapp_number != blank %}
+            <a href="https://wa.me/{{ section.settings.whatsapp_number | remove: '+' }}" target="_blank" class="whatsapp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          {% endif %}
+          
+          {% if section.settings.facebook_url != blank %}
+            <a href="{{ section.settings.facebook_url }}" target="_blank" class="facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          {% endif %}
+          
+          {% if section.settings.twitter_url != blank %}
+            <a href="{{ section.settings.twitter_url }}" target="_blank" class="twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+          {% endif %}
+          
+          {% if section.settings.instagram_url != blank %}
+            <a href="{{ section.settings.instagram_url }}" target="_blank" class="instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          {% endif %}
+        </div>
+        
+        {% if section.settings.phone_number != blank %}
+          <div class="info-item">
+            <i class="fas fa-phone-alt"></i>
+            <h3>{{ section.settings.phone_title }}</h3>
+            <p>{{ section.settings.phone_number }}</p>
+          </div>
+        {% endif %}
+        
+        {% if section.settings.email != blank %}
+          <div class="info-item email-item">
+            <i class="fas fa-envelope"></i>
+            <h3>{{ section.settings.email_title }}</h3>
+            <p>{{ section.settings.email }}</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "اتصل بنا"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section description",
+      "default": "نحن هنا للإجابة على جميع استفساراتك. تواصل معنا وسنرد عليك في أقرب وقت ممكن"
+    },
+    {
+      "type": "header",
+      "content": "Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "الاسم الكامل"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "البريد الإلكتروني"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "رقم الهاتف"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Message placeholder",
+      "default": "رسالتك"
+    },
+    {
+      "type": "text",
+      "id": "submit_text",
+      "label": "Submit button text",
+      "default": "إرسال"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "شكراً لتواصلك معنا! سنرد عليك في أقرب وقت ممكن."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "حدث خطأ أثناء إرسال الرسالة. يرجى التحقق من المعلومات وإعادة المحاولة."
+    },
+    {
+      "type": "header",
+      "content": "Contact Information"
+    },
+    {
+      "type": "text",
+      "id": "phone_title",
+      "label": "Phone title",
+      "default": "اتصل بنا"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number",
+      "default": "0566310983"
+    },
+    {
+      "type": "text",
+      "id": "email_title",
+      "label": "Email title",
+      "default": "راسلنا"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address",
+      "default": "info@saudi-mile-market.com"
+    },
+    {
+      "type": "header",
+      "content": "Social Media"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number",
+      "default": "966566310983"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "Twitter URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form",
+      "category": "Forms"
+    }
+  ]
+}
+{% endschema %} 
