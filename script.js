@@ -32,292 +32,237 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update header on scroll
     window.addEventListener('scroll', updateHeaderStyle);
     
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                const headerHeight = header.offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                
-                window.scrollTo({
-                    top: targetPosition - headerHeight,
-                    behavior: 'smooth'
-                });
-            }
-        });
+    // Theme toggle functionality
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const body = document.body;
+    
+    // Check for saved theme preference or use default
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    body.classList.toggle('dark-theme', savedTheme === 'dark');
+    
+    themeToggleBtn.addEventListener('click', function() {
+        body.classList.toggle('dark-theme');
+        const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+        localStorage.setItem('theme', currentTheme);
     });
     
-    // Form validation
-    const contactForm = document.querySelector('.contact-form form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const messageInput = document.getElementById('message');
-            
-            let isValid = true;
-            
-            if (!nameInput.value.trim()) {
-                showError(nameInput, 'الاسم مطلوب');
-                isValid = false;
-            } else {
-                removeError(nameInput);
-            }
-            
-            if (!emailInput.value.trim()) {
-                showError(emailInput, 'البريد الإلكتروني مطلوب');
-                isValid = false;
-            } else if (!isValidEmail(emailInput.value)) {
-                showError(emailInput, 'يرجى إدخال بريد إلكتروني صحيح');
-                isValid = false;
-            } else {
-                removeError(emailInput);
-            }
-            
-            if (!messageInput.value.trim()) {
-                showError(messageInput, 'الرسالة مطلوبة');
-                isValid = false;
-            } else {
-                removeError(messageInput);
-            }
-            
-            if (isValid) {
-                // Simulate form submission
-                const submitBtn = contactForm.querySelector('.submit-btn');
-                const originalText = submitBtn.textContent;
-                
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'جاري الإرسال...';
-                
-                setTimeout(() => {
-                    alert('شكراً لرسالتك! سنتواصل معك قريباً.');
-                    contactForm.reset();
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
-                }, 1500);
-            }
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('nav');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    
+    menuToggle.addEventListener('click', function() {
+        menuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+        
+        // Close all dropdowns when toggling menu
+        dropdownToggles.forEach(toggle => {
+            toggle.classList.remove('active');
+            toggle.nextElementSibling.classList.remove('show');
+            const icon = toggle.querySelector('i');
+            if (icon) icon.style.transform = 'rotate(0deg)';
         });
-    }
-    
-    // WhatsApp Popup for Buy buttons
-    const buyButtons = document.querySelectorAll('.buy-btn');
-    const whatsappPopup = document.getElementById('whatsapp-popup');
-    const closePopupBtn = document.querySelector('.close-popup');
-    
-    // Open popup when buy button is clicked
-    if (buyButtons.length > 0 && whatsappPopup) {
-        buyButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const packageName = this.closest('.package').querySelector('h3').textContent;
-                // Update popup content with package name
-                const popupTitle = whatsappPopup.querySelector('h3');
-                if (popupTitle) {
-                    popupTitle.textContent = `تواصل معنا لشراء ${packageName}`;
+            
+            // Adjust hero section when menu is open on mobile
+            const hero = document.querySelector('.hero');
+            if (hero && window.innerWidth <= 768) {
+            if (body.classList.contains('menu-open')) {
+                    hero.style.marginTop = nav.offsetHeight + 'px';
+                } else {
+                    hero.style.marginTop = '0';
                 }
-                
-                // Show popup
-                whatsappPopup.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-            });
+            }
         });
         
-        // Close popup when close button is clicked
-        if (closePopupBtn) {
-            closePopupBtn.addEventListener('click', function() {
-                whatsappPopup.classList.remove('active');
-                document.body.style.overflow = ''; // Re-enable scrolling
+        menuOverlay.addEventListener('click', function() {
+        menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        body.classList.remove('menu-open');
+        
+        // Close all dropdowns when closing menu
+        dropdownToggles.forEach(toggle => {
+            toggle.classList.remove('active');
+            toggle.nextElementSibling.classList.remove('show');
+            const icon = toggle.querySelector('i');
+            if (icon) icon.style.transform = 'rotate(0deg)';
+        });
+            
+            // Reset hero margin when closing menu
+            const hero = document.querySelector('.hero');
+            if (hero && window.innerWidth <= 768) {
+                hero.style.marginTop = '0';
+            }
+        });
+        
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            menuToggle.classList.remove('active');
+                    nav.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            
+            // Close all dropdowns on resize to desktop
+            dropdownToggles.forEach(toggle => {
+                toggle.classList.remove('active');
+                toggle.nextElementSibling.classList.remove('show');
+                const icon = toggle.querySelector('i');
+                if (icon) icon.style.transform = 'rotate(0deg)';
             });
+            
+            // Reset hero margin on larger screens
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.marginTop = '0';
+            }
         }
-        
-        // Close popup when clicking outside the popup content
-        whatsappPopup.addEventListener('click', function(e) {
-            if (e.target === whatsappPopup) {
-                whatsappPopup.classList.remove('active');
-                document.body.style.overflow = ''; // Re-enable scrolling
-            }
-        });
-    }
+    });
     
-    // FAQ Accordion
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    if (faqItems.length > 0) {
-        // Open the first FAQ item by default
-        faqItems[0].classList.add('active');
-        
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                // Toggle active class on the clicked item
-                const isActive = item.classList.contains('active');
-                
-                // Close all items
-                faqItems.forEach(faq => {
-                    faq.classList.remove('active');
-                });
-                
-                // If the clicked item wasn't active, make it active
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        });
-    }
-    
-    // Theme Switcher
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    
-    if (themeToggleBtn) {
-        const themeToggleText = themeToggleBtn.querySelector('span');
-        
-        // Check for saved theme preference or use system preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        // Apply the saved theme or system preference
-        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
-            document.body.classList.add('dark-theme');
-            if (themeToggleText) {
-                themeToggleText.textContent = 'الوضع المضيء';
-            }
-            updateHeaderStyle(); // Update header style for dark theme
-        } else {
-            if (themeToggleText) {
-                themeToggleText.textContent = 'الوضع الداكن';
-            }
-            updateHeaderStyle(); // Update header style for light theme
-        }
-        
-        // Toggle theme when button is clicked
-        themeToggleBtn.addEventListener('click', function() {
-            document.body.classList.toggle('dark-theme');
-            
-            // Update button text based on current theme
-            if (document.body.classList.contains('dark-theme')) {
-                if (themeToggleText) {
-                    themeToggleText.textContent = 'الوضع المضيء';
-                }
-                localStorage.setItem('theme', 'dark');
-            } else {
-                if (themeToggleText) {
-                    themeToggleText.textContent = 'الوضع الداكن';
-                }
-                localStorage.setItem('theme', 'light');
-            }
-            
-            // Update header style when theme changes
+    // Update header style on scroll
             updateHeaderStyle();
-        });
-    }
+    window.addEventListener('scroll', updateHeaderStyle);
     
-    // Mobile dropdown toggle
+    // Mobile dropdown functionality
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
-    if (window.innerWidth <= 768 && dropdownToggles.length > 0) {
-        dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
                 e.preventDefault();
-                const parent = this.parentElement;
-                const dropdownMenu = parent.querySelector('.dropdown-menu');
+                e.stopPropagation();
                 
-                // Close all other dropdowns
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (menu !== dropdownMenu && menu.classList.contains('show')) {
-                        menu.classList.remove('show');
-                        const icon = menu.parentElement.querySelector('.dropdown-toggle i');
-                        if (icon) {
-                            icon.style.transform = 'rotate(0)';
-                        }
+                const isActive = this.classList.contains('active');
+                
+                // Close other open dropdowns
+                dropdownToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        otherToggle.classList.remove('active');
+                        otherToggle.nextElementSibling.classList.remove('show');
+                        const otherIcon = otherToggle.querySelector('i');
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
                     }
                 });
                 
                 // Toggle current dropdown
+                this.classList.toggle('active');
+                const dropdownMenu = this.nextElementSibling;
                 dropdownMenu.classList.toggle('show');
+                
+                // Rotate icon
                 const icon = this.querySelector('i');
                 if (icon) {
-                    icon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+                    icon.style.transform = !isActive ? 'rotate(180deg)' : 'rotate(0deg)';
                 }
-            });
+            }
         });
-    }
+    });
     
-    // Helper functions
-    function showError(input, message) {
-        const formGroup = input.parentElement;
-        let errorElement = formGroup.querySelector('.error-message');
-        
-        if (!errorElement) {
-            errorElement = document.createElement('span');
-            errorElement.className = 'error-message';
-            errorElement.style.color = 'red';
-            errorElement.style.fontSize = '0.8rem';
-            errorElement.style.marginTop = '5px';
-            formGroup.appendChild(errorElement);
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768 && !e.target.closest('.dropdown')) {
+            dropdownToggles.forEach(toggle => {
+                toggle.classList.remove('active');
+                toggle.nextElementSibling.classList.remove('show');
+                const icon = toggle.querySelector('i');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            });
         }
-        
-        errorElement.textContent = message;
-        input.style.borderColor = 'red';
-    }
+    });
     
-    function removeError(input) {
-        const formGroup = input.parentElement;
-        const errorElement = formGroup.querySelector('.error-message');
-        
-        if (errorElement) {
-            errorElement.remove();
-        }
-        
-        input.style.borderColor = '';
-    }
+    // Prevent dropdown menu clicks from closing the dropdown
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+    dropdownMenus.forEach(menu => {
+        menu.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.stopPropagation();
+            }
+        });
+    });
     
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
+    // FAQ accordion functionality
+    const faqToggles = document.querySelectorAll('.faq-toggle');
     
-    // Load the dynamic footer
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const faqItem = this.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = this.querySelector('i');
+            
+            // Toggle current FAQ item
+            faqItem.classList.toggle('active');
+            
+            // Toggle icon rotation
+            icon.style.transform = faqItem.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            
+            // Toggle answer visibility with smooth animation
+            if (faqItem.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            } else {
+                answer.style.maxHeight = '0';
+            }
+        });
+    });
+    
+    // Initialize slider if it exists
+    initSlider();
+    
+    // Load dynamic footer
     loadDynamicFooter();
 });
 
-// Dynamic Footer Function
+// Function to update header style on scroll
+function updateHeaderStyle() {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+}
+
+// Function to initialize slider
+function initSlider() {
+    const slider = document.querySelector('.slider');
+    if (!slider) return;
+    
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    
+    // Show first slide
+    slides[0].classList.add('active');
+    
+    // Auto slide function
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+    
+    // Set interval for auto sliding
+    setInterval(nextSlide, 5000);
+}
+
+// Function to load dynamic footer
 function loadDynamicFooter() {
     const footerContainer = document.getElementById('dynamic-footer');
     if (!footerContainer) return;
-
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const isIndex = currentPage === 'index.html' || currentPage === '';
     
     const footerContent = `
         <div class="footer-content">
             <div class="footer-logo">
                 <img src="saudi1.png" alt="شعار سوق الأميال السعودي">
-                <p>رحلتك تبدأ معنا</p>
+                <p>سوق الأميال السعودي - وجهتك الأولى لشراء أميال الخطوط السعودية</p>
             </div>
             <div class="footer-links">
                 <div class="link-group">
                     <h3>روابط سريعة</h3>
                     <ul>
-                        <li><a href="${isIndex ? '#home' : 'index.html#home'}">الرئيسية</a></li>
-                        <li><a href="${isIndex ? '#miles' : 'index.html#miles'}">الأميال</a></li>
-                        <li><a href="${isIndex ? '#contact' : 'index.html#contact'}">اتصل بنا</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                    </ul>
-                </div>
-                <div class="link-group">
-                    <h3>الخدمات</h3>
-                    <ul>
-                        <li><a href="${isIndex ? '#miles' : 'index.html#miles'}">شراء الأميال</a></li>
+                        <li><a href="index.html#home">الرئيسية</a></li>
+                        <li><a href="index.html#miles">الأميال</a></li>
+                        <li><a href="index.html#contact">اتصل بنا</a></li>
                     </ul>
                 </div>
                 <div class="link-group">
@@ -328,28 +273,18 @@ function loadDynamicFooter() {
                         <li><a href="refund.html">سياسة الاسترداد</a></li>
                     </ul>
                 </div>
+                <div class="link-group">
+                    <h3>تواصل معنا</h3>
+                    <ul>
+                        <li><a href="tel:+966566310983">0566310983</a></li>
+                        <li><a href="mailto:info@saudi-mile-market.com">info@saudi-mile-market.com</a></li>
+                        <li><a href="https://wa.me/966566310983" target="_blank">واتساب</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2023 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
-            <div class="payment-methods">
-                <div class="bank-tooltip">
-                    <img src="images/banks/alrajhi.svg" alt="مصرف الراجحي" class="bank-logo">
-                    <span class="bank-name"><i class="fas fa-university"></i> مصرف الراجحي</span>
-                </div>
-                <div class="bank-tooltip">
-                    <img src="images/banks/alahli.png" alt="البنك الأهلي" class="bank-logo">
-                    <span class="bank-name"><i class="fas fa-landmark"></i> البنك الأهلي</span>
-                </div>
-                <div class="bank-tooltip">
-                    <img src="images/banks/alinma.webp" alt="مصرف الإنماء" class="bank-logo">
-                    <span class="bank-name"><i class="fas fa-mosque"></i> مصرف الإنماء</span>
-                </div>
-                <div class="bank-tooltip">
-                    <img src="images/banks/riyad.png" alt="بنك الرياض" class="bank-logo">
-                    <span class="bank-name"><i class="fas fa-city"></i> بنك الرياض</span>
-                </div>
-            </div>
+            <p>© 2024 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
         </div>
     `;
     

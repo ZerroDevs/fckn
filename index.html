@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>سوق الأميال السعودي - الأميال</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -14,6 +14,11 @@
             <div class="logo">
                 <img src="saudi1.png" alt="شعار سوق الأميال السعودي">
             </div>
+            <button class="mobile-menu-toggle" aria-label="القائمة">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
             <nav>
                 <ul>
                     <li><a href="#home">الرئيسية</a></li>
@@ -40,6 +45,8 @@
             </nav>
         </div>
     </header>
+
+    <div class="menu-overlay"></div>
 
     <section class="hero" id="home">
         <div class="slider">
@@ -216,31 +223,22 @@
                 </div>
                 <div class="contact-info">
                     <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h3>العنوان</h3>
-                            <p>مقر سوق الأميال السعودي، جدة، المملكة العربية السعودية</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
                         <i class="fas fa-phone"></i>
                         <div>
                             <h3>الهاتف</h3>
                             <p>0566310983</p>
                         </div>
                     </div>
-                    <div class="info-item">
+                    <div class="info-item email-item">
                         <i class="fas fa-envelope"></i>
-                        <div>
-                            <h3>البريد الإلكتروني</h3>
-                            <p>info@saudi-mile-market.com</p>
-                        </div>
+                        <h3>البريد الإلكتروني</h3>
+                        <p>info@saudi-mile-market.com</p>
                     </div>
                     <div class="social-media">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
             </div>
