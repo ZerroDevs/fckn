@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     menuToggle.addEventListener('click', function() {
         menuToggle.classList.toggle('active');
-            nav.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
+        nav.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
         body.classList.toggle('menu-open');
         
         // Close all dropdowns when toggling menu
@@ -64,21 +64,29 @@ document.addEventListener('DOMContentLoaded', function() {
             const icon = toggle.querySelector('i');
             if (icon) icon.style.transform = 'rotate(0deg)';
         });
-            
-            // Adjust hero section when menu is open on mobile
-            const hero = document.querySelector('.hero');
-            if (hero && window.innerWidth <= 768) {
-            if (body.classList.contains('menu-open')) {
-                    hero.style.marginTop = nav.offsetHeight + 'px';
-                } else {
-                    hero.style.marginTop = '0';
-                }
-            }
-        });
         
-        menuOverlay.addEventListener('click', function() {
+        // Close share menu if open
+        const shareMenu = document.querySelector('.share-menu');
+        const shareToggle = document.querySelector('.share-toggle');
+        if (shareMenu && shareMenu.classList.contains('active')) {
+            shareMenu.classList.remove('active');
+            shareToggle.classList.remove('active');
+        }
+        
+        // Adjust hero section when menu is open on mobile
+        const hero = document.querySelector('.hero');
+        if (hero && window.innerWidth <= 768) {
+            if (body.classList.contains('menu-open')) {
+                hero.style.marginTop = nav.offsetHeight + 'px';
+            } else {
+                hero.style.marginTop = '0';
+            }
+        }
+    });
+    
+    menuOverlay.addEventListener('click', function() {
         menuToggle.classList.remove('active');
-            nav.classList.remove('active');
+        nav.classList.remove('active');
         menuOverlay.classList.remove('active');
         body.classList.remove('menu-open');
         
@@ -89,20 +97,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const icon = toggle.querySelector('i');
             if (icon) icon.style.transform = 'rotate(0deg)';
         });
-            
-            // Reset hero margin when closing menu
-            const hero = document.querySelector('.hero');
-            if (hero && window.innerWidth <= 768) {
-                hero.style.marginTop = '0';
-            }
-        });
         
+        // Reset hero margin when closing menu
+        const hero = document.querySelector('.hero');
+        if (hero && window.innerWidth <= 768) {
+            hero.style.marginTop = '0';
+        }
+    });
+    
     // Handle window resize
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
             menuToggle.classList.remove('active');
-                    nav.classList.remove('active');
-                    menuOverlay.classList.remove('active');
+            nav.classList.remove('active');
+            menuOverlay.classList.remove('active');
             body.classList.remove('menu-open');
             
             // Close all dropdowns on resize to desktop
@@ -122,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Update header style on scroll
-            updateHeaderStyle();
+    updateHeaderStyle();
     window.addEventListener('scroll', updateHeaderStyle);
     
     // Mobile dropdown functionality
@@ -209,6 +217,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize slider if it exists
     initSlider();
     
+    // Initialize share navigation
+    initShareNavigation();
+    
     // Load dynamic footer
     loadDynamicFooter();
 });
@@ -289,4 +300,78 @@ function loadDynamicFooter() {
     `;
     
     footerContainer.innerHTML = footerContent;
+}
+
+// Function to initialize share navigation
+function initShareNavigation() {
+    const shareButtons = document.querySelectorAll('.share-btn');
+    
+    if (shareButtons.length === 0) return;
+    
+    shareButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const platform = this.getAttribute('data-platform');
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            let shareUrl;
+            
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${title} ${url}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(window.location.href)
+                        .then(() => {
+                            const originalText = this.innerHTML;
+                            this.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy: ', err);
+                        });
+                    return;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        });
+    });
+    
+    // Toggle share menu
+    const shareToggle = document.querySelector('.share-toggle');
+    if (shareToggle) {
+        shareToggle.addEventListener('click', function() {
+            const shareMenu = document.querySelector('.share-menu');
+            if (shareMenu) {
+                shareMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            }
+        });
+        
+        // Close share menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.share-navigation')) {
+                const shareMenu = document.querySelector('.share-menu');
+                const shareToggle = document.querySelector('.share-toggle');
+                if (shareMenu && shareMenu.classList.contains('active')) {
+                    shareMenu.classList.remove('active');
+                    shareToggle.classList.remove('active');
+                }
+            }
+        });
+    }
 } 
