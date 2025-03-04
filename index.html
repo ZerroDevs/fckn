@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>سوق الأميال السعودي - الأميال</title>
+    <title data-translate="nav.home">سوق الأميال السعودي - الأميال</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +12,22 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img src="saudi1.png" alt="شعار سوق الأميال السعودي">
+                <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e88e5" />
+                            <stop offset="100%" stop-color="#0d47a1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M30,10 C20,10 15,15 15,25 C15,35 20,40 30,40 C40,40 45,35 45,25 C45,15 40,10 30,10 Z" fill="url(#logoGradient)" />
+                    <path d="M75,10 L60,40 L65,40 L80,10 Z" fill="#0d47a1" />
+                    <path d="M85,10 L70,40 L75,40 L90,10 Z" fill="#0d47a1" />
+                    <path d="M10,25 L50,25 L45,30 L15,30 Z" fill="white" />
+                    <path d="M30,15 L40,25 L30,35 L20,25 Z" fill="white" />
+                    <path d="M95,15 L135,15 L135,20 L95,20 Z" fill="#0d47a1" />
+                    <path d="M95,25 L125,25 L125,30 L95,30 Z" fill="#0d47a1" />
+                    <path d="M95,35 L115,35 L115,40 L95,40 Z" fill="#0d47a1" />
+                </svg>
             </div>
             <button class="mobile-menu-toggle" aria-label="القائمة">
                 <span class="bar"></span>
@@ -21,24 +36,24 @@
             </button>
             <nav>
                 <ul>
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#miles">الأميال</a></li>
-                    <li><a href="#contact">اتصل بنا</a></li>
+                    <li><a href="#home" data-translate="nav.home">الرئيسية</a></li>
+                    <li><a href="#miles" data-translate="nav.miles">الأميال</a></li>
+                    <li><a href="#contact" data-translate="nav.contact">اتصل بنا</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle">
-                            الدعم <i class="fas fa-chevron-down"></i>
+                            <span data-translate="nav.support">الدعم</span> <i class="fas fa-chevron-down"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                            <li><a href="terms.html">الشروط والأحكام</a></li>
-                            <li><a href="refund.html">سياسة الاسترداد</a></li>
+                            <li><a href="faq.html" data-translate="nav.faq">الأسئلة الشائعة</a></li>
+                            <li><a href="terms.html" data-translate="nav.terms">الشروط والأحكام</a></li>
+                            <li><a href="refund.html" data-translate="nav.refund">سياسة الاسترداد</a></li>
                         </ul>
                     </li>
                     <li class="theme-toggle">
                         <button id="theme-toggle-btn" aria-label="تبديل المظهر">
                             <i class="fas fa-moon"></i>
                             <i class="fas fa-sun"></i>
-                            <span>الوضع الداكن</span>
+                            <span data-translate="nav.darkMode">الوضع الداكن</span>
                         </button>
                     </li>
                 </ul>
@@ -53,11 +68,13 @@
             <div class="slide active">
                 <img src="plane1.jpg" alt="طائرة الخطوط السعودية">
                 <div class="slide-content">
-                    <h1>استكشف العالم مع سوق الأميال السعودي</h1>
-                    <p>اشترِ الأميال لمغامرتك القادمة</p>
+                    <h1 data-translate="hero.title">استكشف العالم مع سوق الأميال السعودي</h1>
+                    <p data-translate="hero.subtitle">اشترِ الأميال لمغامرتك القادمة</p>
                     <div class="hero-buttons">
-                        <a href="#miles" class="cta-btn">استكشف الأميال</a>
-                        <a href="https://wa.me/966566310983" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل معنا</a>
+                        <a href="#miles" class="cta-btn" data-translate="hero.exploreMiles">استكشف الأميال</a>
+                        <a href="https://wa.me/966566310983" target="_blank" class="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> <span data-translate="hero.contactUs">تواصل معنا</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -66,120 +83,120 @@
 
     <section class="miles" id="miles">
         <div class="container">
-            <h2 class="section-title">أميال الخطوط السعودية</h2>
-            <p class="section-description">اشترِ الأميال لاستبدالها برحلات، ترقيات، والمزيد</p>
+            <h2 class="section-title" data-translate="miles.title">أميال الخطوط السعودية</h2>
+            <p class="section-description" data-translate="miles.subtitle">اشترِ الأميال لاستبدالها برحلات، ترقيات، والمزيد</p>
             
             <div class="miles-packages">
                 <div class="package">
                     <div class="package-header">
-                        <h3>30 ألف ميل</h3>
-                        <p class="price">1800 ريال</p>
+                        <h3 data-translate="miles.packages.p30k.title">30 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p30k.price">1800 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 30,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال للرحلات الداخلية</li>
-                            <li><i class="fas fa-check"></i> إمكانية التحويل لأفراد العائلة</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p30k.amount">30,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p30k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p30k.domestic">استبدال للرحلات الداخلية</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p30k.transfer">إمكانية التحويل لأفراد العائلة</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
                 
                 <div class="package">
                     <div class="package-header">
-                        <h3>40 ألف ميل</h3>
-                        <p class="price">2200 ريال</p>
+                        <h3 data-translate="miles.packages.p40k.title">40 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p40k.price">2200 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 40,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال للرحلات الداخلية والدولية</li>
-                            <li><i class="fas fa-check"></i> إمكانية التحويل لأفراد العائلة</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p40k.amount">40,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p40k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p40k.flights">استبدال للرحلات الداخلية والدولية</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p40k.transfer">إمكانية التحويل لأفراد العائلة</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
                 
                 <div class="package featured">
                     <div class="package-header">
-                        <h3>50 ألف ميل</h3>
-                        <p class="price">2600 ريال</p>
+                        <h3 data-translate="miles.packages.p50k.title">50 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p50k.price">2600 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 50,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال للرحلات الدولية</li>
-                            <li><i class="fas fa-check"></i> أولوية الصعود للطائرة</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p50k.amount">50,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p50k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p50k.flights">استبدال للرحلات الدولية</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p50k.priority">أولوية الصعود للطائرة</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
                 
                 <div class="package">
                     <div class="package-header">
-                        <h3>60 ألف ميل</h3>
-                        <p class="price">3100 ريال</p>
+                        <h3 data-translate="miles.packages.p60k.title">60 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p60k.price">3100 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 60,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال لأي رحلة</li>
-                            <li><i class="fas fa-check"></i> ترقيات درجة رجال الأعمال</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p60k.amount">60,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p60k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p60k.flights">استبدال لأي رحلة</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p60k.upgrade">ترقيات درجة رجال الأعمال</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
                 
                 <div class="package">
                     <div class="package-header">
-                        <h3>70 ألف ميل</h3>
-                        <p class="price">3600 ريال</p>
+                        <h3 data-translate="miles.packages.p70k.title">70 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p70k.price">3600 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 70,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال لأي رحلة</li>
-                            <li><i class="fas fa-check"></i> ترقيات درجة رجال الأعمال</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p70k.amount">70,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p70k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p70k.flights">استبدال لأي رحلة</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p70k.upgrade">ترقيات درجة رجال الأعمال</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
                 
                 <div class="package">
                     <div class="package-header">
-                        <h3>80 ألف ميل</h3>
-                        <p class="price">4000 ريال</p>
+                        <h3 data-translate="miles.packages.p80k.title">80 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p80k.price">4000 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 80,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال لأي رحلة</li>
-                            <li><i class="fas fa-check"></i> ترقيات درجة رجال الأعمال</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p80k.amount">80,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p80k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p80k.flights">استبدال لأي رحلة</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p80k.upgrade">ترقيات درجة رجال الأعمال</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
                 
                 <div class="package">
                     <div class="package-header">
-                        <h3>100 ألف ميل</h3>
-                        <p class="price">4600 ريال</p>
+                        <h3 data-translate="miles.packages.p100k.title">100 ألف ميل</h3>
+                        <p class="price" data-translate="miles.packages.p100k.price">4600 ريال</p>
                     </div>
                     <div class="package-content">
                         <ul>
-                            <li><i class="fas fa-check"></i> 100,000 ميل</li>
-                            <li><i class="fas fa-check"></i> صالحة لمدة 24 شهر</li>
-                            <li><i class="fas fa-check"></i> استبدال لأي رحلة</li>
-                            <li><i class="fas fa-check"></i> ترقيات درجة الأولى</li>
-                            <li><i class="fas fa-check"></i> أولوية تسجيل الدخول</li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p100k.amount">100,000 ميل</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p100k.validity">صالحة لمدة 24 شهر</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p100k.flights">استبدال لأي رحلة</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p100k.upgrade">ترقيات درجة الأولى</span></li>
+                            <li><i class="fas fa-check"></i> <span data-translate="miles.packages.p100k.priority">أولوية تسجيل الدخول</span></li>
                         </ul>
-                        <a href="#" class="buy-btn">اشترِ الآن</a>
+                        <a href="#" class="buy-btn" data-translate="miles.packages.buyNow">اشترِ الآن</a>
                     </div>
                 </div>
             </div>
@@ -188,9 +205,9 @@
                 <div class="highlight-icon">
                     <i class="fas fa-plane"></i>
                 </div>
-                <h3>يوجد لدينا الحجز عن طريق الاميال</h3>
+                <h3 data-translate="miles.bookingAvailable">يوجد لدينا الحجز عن طريق الاميال</h3>
                 <a href="https://wa.me/966566310983" target="_blank" class="highlight-btn">
-                    <i class="fab fa-whatsapp"></i> تواصل معنا للحجز
+                    <i class="fab fa-whatsapp"></i> <span data-translate="miles.contactForBooking">تواصل معنا للحجز</span>
                 </a>
             </div>
         </div>
@@ -198,44 +215,35 @@
 
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title">اتصل بنا</h2>
+            <h2 class="section-title" data-translate="contact.title">اتصل بنا</h2>
             <div class="contact-content">
                 <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <label for="name">الاسم</label>
-                            <input type="text" id="name" placeholder="اسمك">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">البريد الإلكتروني</label>
-                            <input type="email" id="email" placeholder="بريدك الإلكتروني">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">الموضوع</label>
-                            <input type="text" id="subject" placeholder="الموضوع">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">الرسالة</label>
-                            <textarea id="message" placeholder="رسالتك"></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">إرسال الرسالة</button>
-                    </form>
+                    <div class="form-group">
+                        <label data-translate="contact.name.label">الاسم</label>
+                        <input type="text" data-translate-placeholder="contact.name.placeholder" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="contact.email.label">البريد الإلكتروني</label>
+                        <input type="email" data-translate-placeholder="contact.email.placeholder" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="contact.subject.label">الموضوع</label>
+                        <input type="text" data-translate-placeholder="contact.subject.placeholder" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="contact.message.label">الرسالة</label>
+                        <textarea data-translate-placeholder="contact.message.placeholder" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-translate="contact.submit">إرسال الرسالة</button>
                 </div>
                 <div class="contact-info">
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
-                        <div>
-                            <h3>الهاتف</h3>
-                            <p>0566310983</p>
-                        </div>
+                        <h3 data-translate="contact.phone">0566310983</h3>
                     </div>
                     <div class="info-item email-item">
                         <i class="fas fa-envelope"></i>
-                        <h3>البريد الإلكتروني</h3>
-                        <p>info@saudi-mile-market.com</p>
-                    </div>
-                    <div class="social-media">
-                        <a href="https://wa.me/966566310983" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <h3 data-translate="contact.emailAddress">info@saudi-mile-market.com</h3>
                     </div>
                 </div>
             </div>
@@ -293,20 +301,20 @@
         </div>
         <div class="chat-container">
             <div class="chat-header">
-                <h3>المحادثة المباشرة</h3>
+                <h3 data-translate="chat.title">المحادثة المباشرة</h3>
                 <span class="chat-close">&times;</span>
             </div>
             <div class="chat-messages">
                 <div class="message system">
-                    <p>مرحباً بك في سوق الأميال السعودي! كيف يمكننا مساعدتك اليوم؟</p>
-                    <span class="time">الآن</span>
+                    <p data-translate="chat.welcome">مرحباً بك في سوق الأميال السعودي! كيف يمكننا مساعدتك اليوم؟</p>
+                    <span class="time" data-translate="chat.now">الآن</span>
                     <a href="https://wa.me/966566310983" target="_blank" class="whatsapp-chat-btn">
-                        <i class="fab fa-whatsapp"></i> التواصل المباشر عبر واتساب
+                        <i class="fab fa-whatsapp"></i> <span data-translate="chat.whatsappBtn">التواصل المباشر عبر واتساب</span>
                     </a>
                 </div>
             </div>
             <div class="chat-input">
-                <input type="text" placeholder="اكتب رسالتك هنا..." id="chat-message-input">
+                <input type="text" data-translate-placeholder="chat.inputPlaceholder" placeholder="اكتب رسالتك هنا..." id="chat-message-input">
                 <button id="chat-send-btn">
                     <i class="fas fa-paper-plane"></i>
                 </button>
@@ -314,6 +322,7 @@
         </div>
     </div>
 
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 

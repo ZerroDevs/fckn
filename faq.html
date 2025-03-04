@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>سوق الأميال السعودي - الأسئلة الشائعة</title>
+    <title data-translate="faq.title">الأسئلة الشائعة</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +12,22 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img src="saudi1.png" alt="شعار سوق الأميال السعودي">
+                <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e88e5" />
+                            <stop offset="100%" stop-color="#0d47a1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M30,10 C20,10 15,15 15,25 C15,35 20,40 30,40 C40,40 45,35 45,25 C45,15 40,10 30,10 Z" fill="url(#logoGradient)" />
+                    <path d="M75,10 L60,40 L65,40 L80,10 Z" fill="#0d47a1" />
+                    <path d="M85,10 L70,40 L75,40 L90,10 Z" fill="#0d47a1" />
+                    <path d="M10,25 L50,25 L45,30 L15,30 Z" fill="white" />
+                    <path d="M30,15 L40,25 L30,35 L20,25 Z" fill="white" />
+                    <path d="M95,15 L135,15 L135,20 L95,20 Z" fill="#0d47a1" />
+                    <path d="M95,25 L125,25 L125,30 L95,30 Z" fill="#0d47a1" />
+                    <path d="M95,35 L115,35 L115,40 L95,40 Z" fill="#0d47a1" />
+                </svg>
             </div>
             <button class="mobile-menu-toggle" aria-label="القائمة">
                 <span class="bar"></span>
@@ -21,24 +36,24 @@
             </button>
             <nav>
                 <ul>
-                    <li><a href="index.html#home">الرئيسية</a></li>
-                    <li><a href="index.html#miles">الأميال</a></li>
-                    <li><a href="index.html#contact">اتصل بنا</a></li>
+                    <li><a href="index.html" data-translate="nav.home">الرئيسية</a></li>
+                    <li><a href="index.html#miles" data-translate="nav.miles">الأميال</a></li>
+                    <li><a href="index.html#contact" data-translate="nav.contact">اتصل بنا</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle">
-                            الدعم <i class="fas fa-chevron-down"></i>
+                            <span data-translate="nav.support">الدعم</span> <i class="fas fa-chevron-down"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="faq.html" class="active">الأسئلة الشائعة</a></li>
-                            <li><a href="terms.html">الشروط والأحكام</a></li>
-                            <li><a href="refund.html">سياسة الاسترداد</a></li>
+                            <li><a href="faq.html" data-translate="nav.faq">الأسئلة الشائعة</a></li>
+                            <li><a href="terms.html" data-translate="nav.terms">الشروط والأحكام</a></li>
+                            <li><a href="refund.html" data-translate="nav.refund">سياسة الاسترداد</a></li>
                         </ul>
                     </li>
                     <li class="theme-toggle">
                         <button id="theme-toggle-btn" aria-label="تبديل المظهر">
                             <i class="fas fa-moon"></i>
                             <i class="fas fa-sun"></i>
-                            <span>الوضع الداكن</span>
+                            <span data-translate="nav.darkMode">الوضع الداكن</span>
                         </button>
                     </li>
                 </ul>
@@ -50,74 +65,144 @@
 
     <section class="faq-hero">
         <div class="container">
-            <h1>الأسئلة الشائعة</h1>
-            <p>إجابات على الأسئلة الأكثر شيوعاً حول أميال الخطوط السعودية</p>
+            <h1 data-translate="faq.title">الأسئلة الشائعة</h1>
+            <p data-translate="faq.subtitle">إجابات على الأسئلة الأكثر شيوعاً حول أميال الخطوط السعودية</p>
         </div>
     </section>
 
     <section class="faq-section">
         <div class="container">
+            <div class="faq-categories">
+                <button class="faq-category-btn active" data-category="all">
+                    <i class="fas fa-list-ul"></i>
+                    <span data-translate="faq.categories.all">جميع الأسئلة</span>
+                </button>
+                <button class="faq-category-btn" data-category="miles">
+                    <i class="fas fa-plane"></i>
+                    <span data-translate="faq.categories.miles">الأميال</span>
+                </button>
+                <button class="faq-category-btn" data-category="payment">
+                    <i class="fas fa-credit-card"></i>
+                    <span data-translate="faq.categories.payment">الدفع</span>
+                </button>
+                <button class="faq-category-btn" data-category="account">
+                    <i class="fas fa-user-circle"></i>
+                    <span data-translate="faq.categories.account">الحساب</span>
+                </button>
+            </div>
+
+            <div class="faq-search">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="faq-search-input" data-translate-placeholder="faq.searchPlaceholder" placeholder="ابحث عن سؤال...">
+                    <button id="faq-search-clear" class="search-clear-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
             <div class="faq-container">
-                <div class="faq-item">
+                <div class="faq-item" data-category="miles">
                     <div class="faq-question">
-                        <h3>هل الاميال توصلني على العضويه؟</h3>
+                        <h3 data-translate="faq.questions.q1">هل الاميال توصلني على العضويه؟</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>نعم توصل للعضويه.</p>
+                        <p data-translate="faq.questions.a1">نعم توصل للعضويه.</p>
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="payment">
                     <div class="faq-question">
-                        <h3>هل الاميال قابله للارجاع؟</h3>
+                        <h3 data-translate="faq.questions.q2">هل الاميال قابله للارجاع؟</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>لا غير قابله للارجاع.</p>
+                        <p data-translate="faq.questions.a2">لا غير قابله للارجاع.</p>
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="miles">
                     <div class="faq-question">
-                        <h3>كم مده صلاحيه الاميال؟</h3>
+                        <h3 data-translate="faq.questions.q3">كم مده صلاحيه الاميال؟</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>سنتين.</p>
+                        <p data-translate="faq.questions.a3">سنتين.</p>
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="account">
                     <div class="faq-question">
-                        <h3>كم وقت ياخذ لوصول الاميال الى العضويه؟</h3>
+                        <h3 data-translate="faq.questions.q4">كم وقت ياخذ لوصول الاميال الى العضويه؟</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>من 10 ساعات الي 48 ساعه.</p>
+                        <p data-translate="faq.questions.a4">من 10 ساعات الي 48 ساعه.</p>
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="payment">
                     <div class="faq-question">
-                        <h3>هل الاميال عليها رسوم ضريبيه؟</h3>
+                        <h3 data-translate="faq.questions.q5">هل الاميال عليها رسوم ضريبيه؟</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>لا.</p>
+                        <p data-translate="faq.questions.a5">لا.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="miles">
+                    <div class="faq-question">
+                        <h3 data-translate="faq.questions.q6">كيف يمكنني استخدام الأميال؟</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-translate="faq.questions.a6">يمكنك استخدام الأميال في حجز تذاكر السفر، أو الترقية إلى درجة رجال الأعمال، أو الحصول على خدمات إضافية مثل الأمتعة الزائدة.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="account">
+                    <div class="faq-question">
+                        <h3 data-translate="faq.questions.q7">كيف أتحقق من رصيد الأميال في حسابي؟</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-translate="faq.questions.a7">يمكنك التحقق من رصيد الأميال عبر تسجيل الدخول إلى حساب الفرسان الخاص بك على موقع الخطوط السعودية أو عبر تطبيق الجوال.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="payment">
+                    <div class="faq-question">
+                        <h3 data-translate="faq.questions.q8">ما هي طرق الدفع المتاحة؟</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-translate="faq.questions.a8">نقبل التحويل البنكي كطريقة للدفع.</p>
                     </div>
                 </div>
             </div>
 
+            <div class="faq-no-results" style="display: none;">
+                <div class="no-results-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 data-translate="faq.noResults">لم يتم العثور على نتائج</h3>
+                <p data-translate="faq.tryAgain">حاول البحث بكلمات مختلفة أو تصفح جميع الأسئلة</p>
+                <button class="reset-search-btn" data-translate="faq.resetSearch">عرض جميع الأسئلة</button>
+            </div>
+
             <div class="faq-contact">
-                <h3>لم تجد إجابة لسؤالك؟</h3>
-                <p>يمكنك التواصل معنا مباشرة عبر واتساب أو من خلال نموذج الاتصال</p>
+                <h3 data-translate="faq.noAnswer">لم تجد إجابة لسؤالك؟</h3>
+                <p data-translate="faq.contactPrompt">يمكنك التواصل معنا مباشرة عبر واتساب أو من خلال نموذج الاتصال</p>
                 <div class="faq-buttons">
                     <a href="https://wa.me/966566310983" target="_blank" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+                        <i class="fab fa-whatsapp"></i>
+                        <span data-translate="faq.whatsappBtn">تواصل عبر واتساب</span>
                     </a>
                     <a href="index.html#contact" class="contact-btn">
-                        <i class="fas fa-envelope"></i> نموذج الاتصال
+                        <i class="fas fa-envelope"></i>
+                        <span data-translate="faq.contactForm">نموذج الاتصال</span>
                     </a>
                 </div>
             </div>
@@ -155,27 +240,26 @@
         </div>
     </div>
 
-    <!-- Live Chat Widget -->
     <div class="chat-widget">
         <div class="chat-toggle">
             <i class="fas fa-comments"></i>
         </div>
         <div class="chat-container">
             <div class="chat-header">
-                <h3>المحادثة المباشرة</h3>
+                <h3 data-translate="chat.title">المحادثة المباشرة</h3>
                 <span class="chat-close">&times;</span>
             </div>
             <div class="chat-messages">
                 <div class="message system">
-                    <p>مرحباً بك في سوق الأميال السعودي! كيف يمكننا مساعدتك اليوم؟</p>
-                    <span class="time">الآن</span>
+                    <p data-translate="chat.welcome">مرحباً بك في سوق الأميال السعودي! كيف يمكننا مساعدتك اليوم؟</p>
+                    <span class="time" data-translate="chat.now">الآن</span>
                     <a href="https://wa.me/966566310983" target="_blank" class="whatsapp-chat-btn">
-                        <i class="fab fa-whatsapp"></i> التواصل المباشر عبر واتساب
+                        <i class="fab fa-whatsapp"></i> <span data-translate="chat.whatsappBtn">التواصل المباشر عبر واتساب</span>
                     </a>
                 </div>
             </div>
             <div class="chat-input">
-                <input type="text" placeholder="اكتب رسالتك هنا..." id="chat-message-input">
+                <input type="text" data-translate-placeholder="chat.inputPlaceholder" placeholder="اكتب رسالتك هنا..." id="chat-message-input">
                 <button id="chat-send-btn">
                     <i class="fas fa-paper-plane"></i>
                 </button>
@@ -183,6 +267,7 @@
         </div>
     </div>
 
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 
