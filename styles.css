@@ -2986,4 +2986,25 @@ body.dark-theme .terms-agreement p:last-child {
     .terms-contact h3, .refund-contact h3 {
         font-size: 1.3rem;
     }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+    header nav ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+    }
+    header nav ul li {
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+    }
+    .mobile-menu-toggle {
+        display: block;
+    }
 } 
