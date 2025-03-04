@@ -126,10 +126,6 @@ const translations = {
                 q8: 'ما هي طرق الدفع المتاحة؟',
                 a8: 'نقبل التحويل البنكي كطريقة للدفع.'
             },
-            contact: {
-                title: 'هل لديك استفسارات؟',
-                text: 'يمكنك التواصل معنا مباشرة عبر واتساب أو من خلال نموذج الاتصال'
-            },
             noAnswer: 'لم تجد إجابة لسؤالك؟',
             contactPrompt: 'يمكنك التواصل معنا مباشرة عبر واتساب أو من خلال نموذج الاتصال',
             whatsappBtn: 'تواصل عبر واتساب',
@@ -393,10 +389,6 @@ const translations = {
                 a7: 'You can check your miles balance by logging into your Alfursan account on the Saudi Airlines website or through the mobile app.',
                 q8: 'What payment methods are available?',
                 a8: 'We accept bank transfer as a payment method.'
-            },
-            contact: {
-                title: 'Do you have inquiries?',
-                text: 'You can contact us directly via WhatsApp or through the contact form'
             },
             noAnswer: 'Didn\'t find an answer to your question?',
             contactPrompt: 'You can contact us directly via WhatsApp or through the contact form',
@@ -668,12 +660,8 @@ const translations = {
                 q8: 'Welche Zahlungsmethoden sind verfügbar?',
                 a8: 'Wir akzeptieren Banküberweisungen als Zahlungsmethode.'
             },
-            contact: {
-                title: 'Haben Sie Fragen?',
-                text: 'Sie können uns direkt über WhatsApp oder über das Kontaktformular kontaktieren'
-            },
             noAnswer: 'Antwort nicht gefunden?',
-            contactPrompt: 'Sie können uns direkt über WhatsApp oder über das Kontaktformular kontaktieren',
+            contactPrompt: 'Sie können uns direkt über WhatsApp oder über das Kontaktformular erreichen',
             whatsappBtn: 'Kontakt via WhatsApp',
             contactForm: 'Kontaktformular'
         },
