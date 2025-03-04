@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentLanguage = localStorage.getItem('language') || 'ar';
     const supportedLanguages = ['ar', 'en', 'de'];
 
-    // Immediately set the document language and direction based on saved preference
+    // Immediately set the document language based on saved preference but always use LTR direction
     document.documentElement.lang = currentLanguage;
-    document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = 'ltr'; // Always use LTR direction regardless of language
 
     // CRITICAL: Pre-load the footer with the correct language BEFORE any other operations
     preloadFooterWithCorrectLanguage();
@@ -508,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentLanguage = lang;
         localStorage.setItem('language', lang);
         document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.dir = 'ltr'; // Always use LTR direction regardless of language
         
         // Update language selector text
         const currentLangSpan = document.querySelector('.current-lang');
@@ -549,8 +549,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Update document direction based on language
-        document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+        // Always use LTR direction regardless of language
+        document.documentElement.dir = 'ltr';
         document.documentElement.lang = currentLanguage;
 
         // Update document title
