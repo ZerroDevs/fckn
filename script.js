@@ -137,7 +137,7 @@ function loadDynamicFooter() {
                     <img src="images/banks/riyad.png" alt="بنك الرياض" />
                 </div>
             </div>
-            <p>© 2024 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
+            <p>© 2025 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
         </div>
     `;
 }
