@@ -3138,4 +3138,330 @@ body.dark-theme .terms-agreement p:last-child {
     .bank-logo img {
         height: 20px;
     }
+}
+
+/* Enhanced Interactive Footer */
+.footer-content {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: footerGlowLine 6s infinite ease-in-out;
+}
+
+@keyframes footerGlowLine {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.footer-links .link-group ul li a {
+    position: relative;
+    transition: all 0.3s ease;
+    padding-right: 22px;
+}
+
+.footer-links .link-group ul li a::after {
+    content: '→';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.footer-links .link-group ul li a:hover {
+    padding-right: 26px;
+    color: var(--primary-color);
+}
+
+.footer-links .link-group ul li a:hover::after {
+    opacity: 1;
+    right: 5px;
+}
+
+html[dir="rtl"] .footer-links .link-group ul li a {
+    padding-right: 0;
+    padding-left: 22px;
+}
+
+html[dir="rtl"] .footer-links .link-group ul li a::after {
+    content: '←';
+    right: auto;
+    left: 0;
+}
+
+html[dir="rtl"] .footer-links .link-group ul li a:hover {
+    padding-right: 0;
+    padding-left: 26px;
+}
+
+html[dir="rtl"] .footer-links .link-group ul li a:hover::after {
+    right: auto;
+    left: 5px;
+}
+
+.footer-logo {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: translateY(-5px);
+}
+
+.footer-logo::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover::before {
+    width: 60%;
+}
+
+.footer-bottom {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-bottom:hover .payment-methods .bank-logo {
+    animation: pulse 2s infinite;
+}
+
+.footer-bottom .copyright {
+    position: relative;
+    display: inline-block;
+}
+
+.footer-bottom .copyright::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+.footer-bottom .copyright:hover::after {
+    width: 100%;
+}
+
+/* Interactive contact links in footer */
+.footer-contact-info a {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.footer-contact-info a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--primary-color);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.footer-contact-info a:hover {
+    color: var(--primary-color);
+}
+
+.footer-contact-info a:hover::before {
+    transform: translateX(0);
+}
+
+.footer-contact-info i {
+    transition: transform 0.3s ease;
+}
+
+.footer-contact-info a:hover i {
+    transform: translateY(-3px);
+}
+
+/* Dark theme overrides */
+body.dark-theme .footer-content::after {
+    background: linear-gradient(90deg, transparent, var(--accent-dark-color), transparent);
+}
+
+body.dark-theme .footer-links .link-group ul li a:hover {
+    color: var(--accent-dark-color);
+}
+
+body.dark-theme .footer-logo::before {
+    background: var(--accent-dark-color);
+}
+
+body.dark-theme .footer-contact-info a::before {
+    background-color: var(--accent-dark-color);
+}
+
+body.dark-theme .footer-contact-info a:hover {
+    color: var(--accent-dark-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-logo:hover::before {
+        width: 40%;
+    }
+}
+
+/* Ripple effect for footer links */
+footer a {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+body.dark-theme .ripple-effect {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Interactive tooltip for bank logos */
+.interactive-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.interactive-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--primary-color) transparent transparent transparent;
+}
+
+body.dark-theme .interactive-tooltip {
+    background: var(--accent-dark-color);
+}
+
+body.dark-theme .interactive-tooltip::after {
+    border-color: var(--accent-dark-color) transparent transparent transparent;
+}
+
+/* Footer Quick Links Animation Effect */
+.footer-quick-links {
+    position: relative;
+}
+
+.footer-quick-links h3 {
+    position: relative;
+    display: inline-block;
+}
+
+.footer-quick-links h3::after {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.footer-quick-links:hover h3::after {
+    width: 100%;
+}
+
+/* Footer Contact Animation */
+.footer-contact {
+    position: relative;
+}
+
+.footer-contact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(30, 136, 229, 0.1);
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.footer-contact-icon i {
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.footer-contact a:hover .footer-contact-icon {
+    background: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.footer-contact a:hover .footer-contact-icon i {
+    color: white;
+}
+
+body.dark-theme .footer-contact-icon {
+    background: rgba(66, 165, 245, 0.1);
+}
+
+body.dark-theme .footer-contact-icon i {
+    color: var(--accent-dark-color);
+}
+
+body.dark-theme .footer-contact a:hover .footer-contact-icon {
+    background: var(--accent-dark-color);
+}
+
+/* Responsive styles for footer animations */
+@media (max-width: 768px) {
+    .footer-quick-links h3::after {
+        width: 20%;
+    }
 } 

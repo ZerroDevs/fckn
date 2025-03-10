@@ -152,6 +152,97 @@ function initGallery() {
     });
 }
 
+// Initialize Interactive Footer
+function initInteractiveFooter() {
+    // Add entrance animations to footer sections
+    const footerLogo = document.querySelector('.footer-logo');
+    if (footerLogo) {
+        footerLogo.classList.add('slide-in-up');
+    }
+    
+    // Animate footer link groups with staggered effect
+    const linkGroups = document.querySelectorAll('.footer-links .link-group');
+    linkGroups.forEach((group, index) => {
+        group.classList.add('slide-in-up');
+        group.style.transitionDelay = `${0.1 * index}s`;
+    });
+    
+    // Animate bank logos with staggered effect
+    const bankLogos = document.querySelectorAll('.payment-methods .bank-logo');
+    bankLogos.forEach((logo, index) => {
+        logo.classList.add('slide-in-up');
+        logo.style.transitionDelay = `${0.05 * index}s`;
+        
+        // Add interactive tooltip functionality
+        logo.addEventListener('mouseenter', function(e) {
+            // Create tooltip if not already present
+            if (!this.querySelector('.interactive-tooltip')) {
+                const bankName = this.getAttribute('data-bank') || 'البنك';
+                const tooltip = document.createElement('div');
+                tooltip.className = 'interactive-tooltip';
+                tooltip.innerHTML = `<span>${bankName}</span>`;
+                this.appendChild(tooltip);
+                
+                // Position the tooltip
+                setTimeout(() => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.transform = 'translateY(0)';
+                }, 10);
+            }
+        });
+        
+        logo.addEventListener('mouseleave', function(e) {
+            const tooltip = this.querySelector('.interactive-tooltip');
+            if (tooltip) {
+                tooltip.style.opacity = '0';
+                tooltip.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    tooltip.remove();
+                }, 300);
+            }
+        });
+    });
+    
+    // Add ripple effect to footer buttons and links
+    const footerLinks = document.querySelectorAll('footer a');
+    footerLinks.forEach(link => {
+        link.addEventListener('mousedown', function(e) {
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            this.appendChild(ripple);
+            
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Observe footer to trigger animations when visible
+    const footerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const animatedElements = entry.target.querySelectorAll('.slide-in-up, .slide-in-right, .slide-in-left');
+                animatedElements.forEach(el => {
+                    el.classList.add('slide-visible');
+                });
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    const footer = document.querySelector('footer');
+    if (footer) {
+        footerObserver.observe(footer);
+    }
+}
+
 // Initialize all enhancements
 document.addEventListener('DOMContentLoaded', () => {
     initSmoothAnimations();
@@ -159,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFormFeedback();
     initFloatingActionButton();
     initGallery();
+    initInteractiveFooter();
 });
 
 // Add scroll animations to existing elements

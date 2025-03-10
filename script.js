@@ -150,71 +150,91 @@ function initSlider() {
 
 // Function to load the dynamic footer
 function loadDynamicFooter() {
-    const footerContent = document.getElementById('dynamic-footer');
-    if (!footerContent) return;
-
-    // Set the footer HTML content
-    footerContent.innerHTML = `
-        <div class="footer-content">
-            <div class="footer-logo">
-                <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
-                    <defs>
-                        <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#1e88e5" />
-                            <stop offset="100%" stop-color="#0d47a1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M30,10 C20,10 15,15 15,25 C15,35 20,40 30,40 C40,40 45,35 45,25 C45,15 40,10 30,10 Z" fill="url(#footerLogoGradient)" />
-                    <path d="M75,10 L60,40 L65,40 L80,10 Z" fill="#1e88e5" />
-                    <path d="M85,10 L70,40 L75,40 L90,10 Z" fill="#1e88e5" />
-                    <path d="M10,25 L50,25 L45,30 L15,30 Z" fill="white" />
-                    <path d="M30,15 L40,25 L30,35 L20,25 Z" fill="white" />
-                    <path d="M95,15 L135,15 L135,20 L95,20 Z" fill="#1e88e5" />
-                    <path d="M95,25 L125,25 L125,30 L95,30 Z" fill="#1e88e5" />
-                    <path d="M95,35 L115,35 L115,40 L95,40 Z" fill="#1e88e5" />
-                </svg>
-                <p>سوق الأميال السعودي - وجهتك الأولى لشراء أميال الخطوط السعودية</p>
+    const dynamicFooter = document.getElementById('dynamic-footer');
+    if (dynamicFooter) {
+        dynamicFooter.innerHTML = `
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
+                            <defs>
+                                <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#1e88e5" />
+                                    <stop offset="100%" stop-color="#0d47a1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M30,10 C20,10 15,15 15,25 C15,35 20,40 30,40 C40,40 45,35 45,25 C45,15 40,10 30,10 Z" fill="url(#footerLogoGradient)" />
+                            <path d="M75,10 L60,40 L65,40 L80,10 Z" fill="#0d47a1" />
+                            <path d="M85,10 L70,40 L75,40 L90,10 Z" fill="#0d47a1" />
+                            <path d="M10,25 L50,25 L45,30 L15,30 Z" fill="white" />
+                            <path d="M30,15 L40,25 L30,35 L20,25 Z" fill="white" />
+                            <path d="M95,15 L135,15 L135,20 L95,20 Z" fill="#0d47a1" />
+                            <path d="M95,25 L125,25 L125,30 L95,30 Z" fill="#0d47a1" />
+                            <path d="M95,35 L115,35 L115,40 L95,40 Z" fill="#0d47a1" />
+                        </svg>
+                    </a>
+                    <p>وجهتك الأولى لشراء أميال الخطوط السعودية</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group footer-quick-links">
+                        <h3>روابط سريعة</h3>
+                        <ul>
+                            <li><a href="index.html">الرئيسية</a></li>
+                            <li><a href="index.html#miles">الأميال</a></li>
+                            <li><a href="index.html#contact">اتصل بنا</a></li>
+                            <li><a href="faq.html">الأسئلة الشائعة</a></li>
+                            <li><a href="terms.html">الشروط والأحكام</a></li>
+                            <li><a href="refund.html">سياسة الاسترداد</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group footer-contact">
+                        <h3>تواصل معنا</h3>
+                        <div class="footer-contact-info">
+                            <p>
+                                <a href="tel:0566310983">
+                                    <span class="footer-contact-icon"><i class="fas fa-phone-alt"></i></span>
+                                    0566310983
+                                </a>
+                            </p>
+                            <p>
+                                <a href="mailto:info@saudi-mile-market.com">
+                                    <span class="footer-contact-icon"><i class="fas fa-envelope"></i></span>
+                                    info@saudi-mile-market.com
+                                </a>
+                            </p>
+                            <p>
+                                <a href="https://wa.me/966566310983" target="_blank">
+                                    <span class="footer-contact-icon"><i class="fab fa-whatsapp"></i></span>
+                                    واتساب
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="footer-links">
-                <div class="link-group">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="index.html">الرئيسية</a></li>
-                        <li><a href="index.html#miles">الأميال</a></li>
-                        <li><a href="index.html#contact">اتصل بنا</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                        <li><a href="terms.html">الشروط والأحكام</a></li>
-                        <li><a href="refund.html">سياسة الاسترداد</a></li>
-                    </ul>
+            
+            <div class="footer-bottom">
+                <div class="footer-banks">
+                    <div class="bank-logo" data-bank="البنك الأهلي السعودي">
+                        <img src="images/banks/snb.png" alt="البنك الأهلي السعودي">
+                    </div>
+                    <div class="bank-logo" data-bank="مصرف الراجحي">
+                        <img src="images/banks/alrajhi.png" alt="مصرف الراجحي">
+                    </div>
+                    <div class="bank-logo" data-bank="البنك السعودي الفرنسي">
+                        <img src="images/banks/banque-saudi-fransi.png" alt="البنك السعودي الفرنسي">
+                    </div>
+                    <div class="bank-logo" data-bank="بنك الرياض">
+                        <img src="images/banks/riyadh-bank.png" alt="بنك الرياض">
+                    </div>
                 </div>
-                <div class="link-group">
-                    <h3>تواصل معنا</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> <span>0566310983</span></li>
-                        <li><i class="fas fa-envelope"></i> <span>info@saudi-mile-market.com</span></li>
-                        <li><a href="https://wa.me/966566310983" target="_blank"><i class="fab fa-whatsapp"></i> <span>واتساب</span></a></li>
-                    </ul>
-                </div>
+                
+                <p class="copyright">© 2025 سوق الأميال السعودي. جميع الحقوق محفوظة</p>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-banks">
-                <div class="bank-logo" title="بنك الأهلي">
-                    <img src="images/banks/alahli.png" alt="بنك الأهلي" />
-                </div>
-                <div class="bank-logo" title="بنك الانماء">
-                    <img src="images/banks/alinma.png" alt="بنك الانماء" />
-                </div>
-                <div class="bank-logo" title="بنك الراجحي">
-                    <img src="images/banks/alrajhi.png" alt="بنك الراجحي" />
-                </div>
-                <div class="bank-logo" title="بنك الرياض">
-                    <img src="images/banks/riyad.png" alt="بنك الرياض" />
-                </div>
-            </div>
-            <p>© 2025 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
-        </div>
-    `;
+        `;
+    }
 }
 
 // Function to initialize theme toggle functionality
