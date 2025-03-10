@@ -217,21 +217,20 @@ function loadDynamicFooter() {
             
             <div class="footer-bottom">
                 <div class="footer-banks">
-                    <div class="bank-logo" data-bank="البنك الأهلي السعودي">
-                        <img src="images/banks/snb.png" alt="البنك الأهلي السعودي">
+                    <div class="bank-logo" title="بنك الأهلي">
+                        <img src="images/banks/alahli.png" alt="بنك الأهلي" />
                     </div>
-                    <div class="bank-logo" data-bank="مصرف الراجحي">
-                        <img src="images/banks/alrajhi.png" alt="مصرف الراجحي">
+                    <div class="bank-logo" title="بنك الانماء">
+                        <img src="images/banks/alinma.png" alt="بنك الانماء" />
                     </div>
-                    <div class="bank-logo" data-bank="البنك السعودي الفرنسي">
-                        <img src="images/banks/banque-saudi-fransi.png" alt="البنك السعودي الفرنسي">
+                    <div class="bank-logo" title="بنك الراجحي">
+                        <img src="images/banks/alrajhi.png" alt="بنك الراجحي" />
                     </div>
-                    <div class="bank-logo" data-bank="بنك الرياض">
-                        <img src="images/banks/riyadh-bank.png" alt="بنك الرياض">
+                    <div class="bank-logo" title="بنك الرياض">
+                        <img src="images/banks/riyad.png" alt="بنك الرياض" />
                     </div>
                 </div>
-                
-                <p class="copyright">© 2025 سوق الأميال السعودي. جميع الحقوق محفوظة</p>
+                <p>© 2025 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
             </div>
         `;
     }
