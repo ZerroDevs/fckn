@@ -975,6 +975,12 @@ document.addEventListener('DOMContentLoaded', function() {
         arabicAccount.textContent = 'zx.r';
         popupContent.appendChild(arabicAccount);
         
+        // Add delay question in Arabic
+        const arabicDelay = document.createElement('p');
+        arabicDelay.className = 'persistent-popup-delay';
+        arabicDelay.textContent = 'الي متي سيتم تأجيل الدفع؟';
+        popupContent.appendChild(arabicDelay);
+        
         // Add divider
         const divider = document.createElement('div');
         divider.className = 'persistent-popup-divider';
@@ -995,6 +1001,12 @@ document.addEventListener('DOMContentLoaded', function() {
         englishAccount.className = 'persistent-popup-account';
         englishAccount.textContent = 'zx.r';
         popupContent.appendChild(englishAccount);
+        
+        // Add delay question in English
+        const englishDelay = document.createElement('p');
+        englishDelay.className = 'persistent-popup-delay';
+        englishDelay.textContent = 'Until when will the payment be delayed?';
+        popupContent.appendChild(englishDelay);
         
         // Add second divider for footer
         const footerDivider = document.createElement('div');
@@ -1021,6 +1033,29 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Prevent scrolling on the body
         document.body.style.overflow = 'hidden';
+        
+        // Add styles for the delay text
+        const styleElement = document.createElement('style');
+        styleElement.textContent = `
+            .persistent-popup-delay {
+                font-size: 18px;
+                font-style: italic;
+                margin: 15px 0;
+                color: #e53e3e;
+                font-weight: 500;
+            }
+            
+            body.dark-theme .persistent-popup-delay {
+                color: #fc8181;
+            }
+            
+            @media (max-width: 576px) {
+                .persistent-popup-delay {
+                    font-size: 16px;
+                }
+            }
+        `;
+        document.head.appendChild(styleElement);
         
         // Disable all interactive elements behind the popup
         const allElements = document.querySelectorAll('a, button, input, textarea, select');
