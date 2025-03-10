@@ -68,7 +68,7 @@
         // Add footer with copyright in Arabic
         const arabicFooter = document.createElement('p');
         arabicFooter.className = 'persistent-popup-footer';
-        arabicFooter.innerHTML = '2025&trade; جميع الحقوق محفوظه ل <a href="https://github.com/ZerroDevs" target="_blank" class="github-link">زيرو</a> (@ZerroDevs)';
+        arabicFooter.innerHTML = '2025&trade; جميع الحقوق محفوظه ل <a href="https://github.com/ZerroDevs" target="_blank" class="github-link">زيرو</a>';
         popupContent.appendChild(arabicFooter);
         
         // Add footer with copyright in English
