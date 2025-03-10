@@ -422,5 +422,79 @@ html[dir="rtl"] .slider-nav .next i {
         width: 10px;
         height: 10px;
     }
+}
+
+/* Smooth Sliding Animations */
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-down {
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-visible {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* Staggered animation delays */
+.stagger-animation > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stagger-animation > *.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover slide effects */
+.hover-slide-up {
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-slide-up:hover {
+    transform: translateY(-10px);
+}
+
+.hover-slide-right {
+    transform: translateX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-slide-right:hover {
+    transform: translateX(10px);
+}
+
+/* RTL support for sliding animations */
+html[dir="rtl"] .slide-in-right {
+    transform: translateX(-50px);
+}
+
+html[dir="rtl"] .slide-in-left {
+    transform: translateX(50px);
+}
+
+html[dir="rtl"] .hover-slide-right:hover {
+    transform: translateX(-10px);
 } 
 

@@ -1,3 +1,37 @@
+// Smooth Sliding Animations
+function initSmoothAnimations() {
+    // Initialize slide-in animations
+    const slideElements = {
+        right: document.querySelectorAll('.slide-in-right'),
+        left: document.querySelectorAll('.slide-in-left'),
+        up: document.querySelectorAll('.slide-in-up'),
+        down: document.querySelectorAll('.slide-in-down')
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('slide-visible');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    // Observe all slide elements
+    Object.values(slideElements).forEach(elements => {
+        elements.forEach(el => observer.observe(el));
+    });
+
+    // Initialize staggered animations
+    const staggerContainers = document.querySelectorAll('.stagger-animation');
+    staggerContainers.forEach(container => {
+        const children = container.children;
+        [...children].forEach((child, index) => {
+            child.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(child);
+        });
+    });
+}
+
 // Scroll Animations
 function initScrollAnimations() {
     const fadeElements = document.querySelectorAll('.fade-in');
@@ -120,6 +154,7 @@ function initGallery() {
 
 // Initialize all enhancements
 document.addEventListener('DOMContentLoaded', () => {
+    initSmoothAnimations();
     initScrollAnimations();
     initFormFeedback();
     initFloatingActionButton();
