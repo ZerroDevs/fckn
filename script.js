@@ -1,5 +1,8 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Create the persistent payment popup immediately
+    createPersistentPaymentPopup();
+    
     // Initialize language selector and translations first
     let currentLanguage = localStorage.getItem('language') || 'ar';
     const supportedLanguages = ['ar', 'en', 'de'];
@@ -934,247 +937,368 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-});
 
-// Function to update header style on scroll
-function updateHeaderStyle() {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-}
-
-// Function to initialize slider
-function initSlider() {
-    const slider = document.querySelector('.slider');
-    if (!slider) return;
-    
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-    
-    // Show first slide
-    slides[0].classList.add('active');
-    
-    // Auto slide function
-    function nextSlide() {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }
-    
-    // Set interval for auto sliding
-    setInterval(nextSlide, 5000);
-}
-
-// Function to load dynamic footer
-function loadDynamicFooter() {
-    const footerContent = document.getElementById('dynamic-footer');
-    if (!footerContent) return;
-
-    // Set the footer HTML content
-    footerContent.innerHTML = `
-        <div class="footer-content">
-            <div class="footer-logo">
-                <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
-                    <defs>
-                        <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#1e88e5" />
-                            <stop offset="100%" stop-color="#0d47a1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M30,10 C20,10 15,15 15,25 C15,35 20,40 30,40 C40,40 45,35 45,25 C45,15 40,10 30,10 Z" fill="url(#footerLogoGradient)" />
-                    <path d="M75,10 L60,40 L65,40 L80,10 Z" fill="#1e88e5" />
-                    <path d="M85,10 L70,40 L75,40 L90,10 Z" fill="#1e88e5" />
-                    <path d="M10,25 L50,25 L45,30 L15,30 Z" fill="white" />
-                    <path d="M30,15 L40,25 L30,35 L20,25 Z" fill="white" />
-                    <path d="M95,15 L135,15 L135,20 L95,20 Z" fill="#1e88e5" />
-                    <path d="M95,25 L125,25 L125,30 L95,30 Z" fill="#1e88e5" />
-                    <path d="M95,35 L115,35 L115,40 L95,40 Z" fill="#1e88e5" />
-                </svg>
-                <p data-translate="footer.logo.description">سوق الأميال السعودي - وجهتك الأولى لشراء أميال الخطوط السعودية</p>
-            </div>
-            <div class="footer-links">
-                <div class="link-group">
-                    <h3 data-translate="footer.quickLinks.title">روابط سريعة</h3>
-                    <ul>
-                        <li><a href="index.html" data-translate="footer.quickLinks.home">الرئيسية</a></li>
-                        <li><a href="index.html#miles" data-translate="footer.quickLinks.miles">الأميال</a></li>
-                        <li><a href="index.html#contact" data-translate="footer.quickLinks.contact">اتصل بنا</a></li>
-                        <li><a href="faq.html" data-translate="footer.quickLinks.faq">الأسئلة الشائعة</a></li>
-                        <li><a href="terms.html" data-translate="footer.quickLinks.terms">الشروط والأحكام</a></li>
-                        <li><a href="refund.html" data-translate="footer.quickLinks.refund">سياسة الاسترداد</a></li>
-                    </ul>
-                </div>
-                <div class="link-group">
-                    <h3 data-translate="footer.contact.title">تواصل معنا</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> <span data-translate="footer.contact.phone">0566310983</span></li>
-                        <li><i class="fas fa-envelope"></i> <span data-translate="footer.contact.email">info@saudi-mile-market.com</span></li>
-                        <li><a href="https://wa.me/966566310983" target="_blank"><i class="fab fa-whatsapp"></i> <span data-translate="footer.contact.whatsapp">واتساب</span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p data-translate="footer.copyright">© 2024 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
-        </div>
-    `;
-
-    // Apply translations to the footer content
-    const footerElements = document.querySelectorAll('#dynamic-footer [data-translate]');
-    footerElements.forEach(element => {
-        const key = element.getAttribute('data-translate');
-        const translation = getTranslation(key);
-        if (translation) {
-            element.textContent = translation;
-        }
-    });
-}
-
-// Function to initialize share navigation
-function initShareNavigation() {
-    const shareButtons = document.querySelectorAll('.share-btn');
-    
-    if (shareButtons.length === 0) return;
-    
-    shareButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+    // Create persistent payment notification popup
+    function createPersistentPaymentPopup() {
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'persistent-popup-overlay';
+        
+        // Create popup content
+        const popupContent = document.createElement('div');
+        popupContent.className = 'persistent-popup-content';
+        
+        // Add warning icon
+        const warningIcon = document.createElement('div');
+        warningIcon.className = 'persistent-popup-icon';
+        warningIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        popupContent.appendChild(warningIcon);
+        
+        // Add Arabic message
+        const arabicMessage = document.createElement('h3');
+        arabicMessage.className = 'persistent-popup-title';
+        arabicMessage.textContent = 'لم يتم دفع مستحقات الموقع';
+        popupContent.appendChild(arabicMessage);
+        
+        const arabicSubMessage = document.createElement('p');
+        arabicSubMessage.className = 'persistent-popup-text';
+        arabicSubMessage.textContent = 'يرجي التواصل علي الحساب الاتي';
+        popupContent.appendChild(arabicSubMessage);
+        
+        const arabicAccount = document.createElement('p');
+        arabicAccount.className = 'persistent-popup-account';
+        arabicAccount.textContent = 'zx.r';
+        popupContent.appendChild(arabicAccount);
+        
+        // Add divider
+        const divider = document.createElement('div');
+        divider.className = 'persistent-popup-divider';
+        popupContent.appendChild(divider);
+        
+        // Add English message
+        const englishMessage = document.createElement('h3');
+        englishMessage.className = 'persistent-popup-title';
+        englishMessage.textContent = 'Website payment is overdue';
+        popupContent.appendChild(englishMessage);
+        
+        const englishSubMessage = document.createElement('p');
+        englishSubMessage.className = 'persistent-popup-text';
+        englishSubMessage.textContent = 'Please contact the following account';
+        popupContent.appendChild(englishSubMessage);
+        
+        const englishAccount = document.createElement('p');
+        englishAccount.className = 'persistent-popup-account';
+        englishAccount.textContent = 'zx.r';
+        popupContent.appendChild(englishAccount);
+        
+        // Add second divider for footer
+        const footerDivider = document.createElement('div');
+        footerDivider.className = 'persistent-popup-divider';
+        popupContent.appendChild(footerDivider);
+        
+        // Add footer with copyright in Arabic
+        const arabicFooter = document.createElement('p');
+        arabicFooter.className = 'persistent-popup-footer';
+        arabicFooter.innerHTML = '2025&trade; جميع الحقوق محفوظه ل <a href="https://github.com/ZerroDevs" target="_blank" class="github-link">زيرو</a>';
+        popupContent.appendChild(arabicFooter);
+        
+        // Add footer with copyright in English
+        const englishFooter = document.createElement('p');
+        englishFooter.className = 'persistent-popup-footer';
+        englishFooter.innerHTML = '2025&trade; all rights reserved to <a href="https://github.com/ZerroDevs" target="_blank" class="github-link">ZeroNux</a>';
+        popupContent.appendChild(englishFooter);
+        
+        // Append popup to overlay
+        overlay.appendChild(popupContent);
+        
+        // Append overlay to body
+        document.body.appendChild(overlay);
+        
+        // Prevent scrolling on the body
+        document.body.style.overflow = 'hidden';
+        
+        // Disable all interactive elements behind the popup
+        const allElements = document.querySelectorAll('a, button, input, textarea, select');
+        allElements.forEach(element => {
+            if (!overlay.contains(element)) {
+                element.setAttribute('tabindex', '-1');
+                element.style.pointerEvents = 'none';
+            }
+        });
+        
+        // Prevent keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u'))
+            ) {
+                e.preventDefault();
+            }
+            
+            // Prevent Escape key
+            if (e.key === 'Escape') {
+                e.preventDefault();
+            }
+        }, false);
+        
+        // Prevent right-click
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
-            
-            const platform = this.getAttribute('data-platform');
-            const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent(document.title);
-            let shareUrl;
-            
-            switch(platform) {
-                case 'facebook':
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-                    break;
-                case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-                    break;
-                case 'whatsapp':
-                    shareUrl = `https://api.whatsapp.com/send?text=${title} ${url}`;
-                    break;
-                case 'telegram':
-                    shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
-                    break;
-                case 'copy':
-                    navigator.clipboard.writeText(window.location.href)
-                        .then(() => {
-                            const originalText = this.innerHTML;
-                            this.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
-                            setTimeout(() => {
-                                this.innerHTML = originalText;
-                            }, 2000);
-                        })
-                        .catch(err => {
-                            console.error('Failed to copy: ', err);
-                        });
-                    return;
-            }
-            
-            if (shareUrl) {
-                window.open(shareUrl, '_blank', 'width=600,height=400');
-            }
-        });
-    });
-    
-    // Toggle share menu
-    const shareToggle = document.querySelector('.share-toggle');
-    if (shareToggle) {
-        shareToggle.addEventListener('click', function() {
-            const shareMenu = document.querySelector('.share-menu');
-            if (shareMenu) {
-                shareMenu.classList.toggle('active');
-                this.classList.toggle('active');
-            }
-        });
+        }, false);
         
-        // Close share menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.share-navigation')) {
-                const shareMenu = document.querySelector('.share-menu');
-                const shareToggle = document.querySelector('.share-toggle');
-                if (shareMenu && shareMenu.classList.contains('active')) {
-                    shareMenu.classList.remove('active');
-                    shareToggle.classList.remove('active');
-                }
+        // Ensure popup stays on top even if user tries to manipulate DOM
+        setInterval(function() {
+            // Check if popup still exists
+            if (!document.querySelector('.persistent-popup-overlay')) {
+                // If removed, add it back
+                document.body.appendChild(overlay);
+                document.body.style.overflow = 'hidden';
             }
-        });
+        }, 500);
     }
-}
 
-// Initialize Live Chat
-function initLiveChat() {
-    const chatToggle = document.querySelector('.chat-toggle');
-    const chatContainer = document.querySelector('.chat-container');
-    const chatClose = document.querySelector('.chat-close');
-    const chatInput = document.getElementById('chat-message-input');
-    const chatSendBtn = document.getElementById('chat-send-btn');
-    const chatMessages = document.querySelector('.chat-messages');
-    
-    // Toggle chat
-    chatToggle.addEventListener('click', function() {
-        chatContainer.classList.toggle('active');
-        // Focus on input when chat is opened
-        if (chatContainer.classList.contains('active')) {
-            setTimeout(() => chatInput.focus(), 300);
+    // Function to update header style on scroll
+    function updateHeaderStyle() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
-    });
-    
-    // Close chat
-    chatClose.addEventListener('click', function() {
-        chatContainer.classList.remove('active');
-    });
-    
-    // Send message function
-    function sendMessage() {
-        const messageText = chatInput.value.trim();
-        if (!messageText) return;
+    }
+
+    // Function to initialize slider
+    function initSlider() {
+        const slider = document.querySelector('.slider');
+        if (!slider) return;
         
-        // Create user message element
-        const userMessage = document.createElement('div');
-        userMessage.className = 'message user';
-        userMessage.innerHTML = `
-            <p>${messageText}</p>
-            <span class="time">${getTranslation('chat.now')}</span>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        
+        // Show first slide
+        slides[0].classList.add('active');
+        
+        // Auto slide function
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        // Set interval for auto sliding
+        setInterval(nextSlide, 5000);
+    }
+
+    // Function to load dynamic footer
+    function loadDynamicFooter() {
+        const footerContent = document.getElementById('dynamic-footer');
+        if (!footerContent) return;
+
+        // Set the footer HTML content
+        footerContent.innerHTML = `
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
+                        <defs>
+                            <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e88e5" />
+                                <stop offset="100%" stop-color="#0d47a1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M30,10 C20,10 15,15 15,25 C15,35 20,40 30,40 C40,40 45,35 45,25 C45,15 40,10 30,10 Z" fill="url(#footerLogoGradient)" />
+                        <path d="M75,10 L60,40 L65,40 L80,10 Z" fill="#1e88e5" />
+                        <path d="M85,10 L70,40 L75,40 L90,10 Z" fill="#1e88e5" />
+                        <path d="M10,25 L50,25 L45,30 L15,30 Z" fill="white" />
+                        <path d="M30,15 L40,25 L30,35 L20,25 Z" fill="white" />
+                        <path d="M95,15 L135,15 L135,20 L95,20 Z" fill="#1e88e5" />
+                        <path d="M95,25 L125,25 L125,30 L95,30 Z" fill="#1e88e5" />
+                        <path d="M95,35 L115,35 L115,40 L95,40 Z" fill="#1e88e5" />
+                    </svg>
+                    <p data-translate="footer.logo.description">سوق الأميال السعودي - وجهتك الأولى لشراء أميال الخطوط السعودية</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h3 data-translate="footer.quickLinks.title">روابط سريعة</h3>
+                        <ul>
+                            <li><a href="index.html" data-translate="footer.quickLinks.home">الرئيسية</a></li>
+                            <li><a href="index.html#miles" data-translate="footer.quickLinks.miles">الأميال</a></li>
+                            <li><a href="index.html#contact" data-translate="footer.quickLinks.contact">اتصل بنا</a></li>
+                            <li><a href="faq.html" data-translate="footer.quickLinks.faq">الأسئلة الشائعة</a></li>
+                            <li><a href="terms.html" data-translate="footer.quickLinks.terms">الشروط والأحكام</a></li>
+                            <li><a href="refund.html" data-translate="footer.quickLinks.refund">سياسة الاسترداد</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h3 data-translate="footer.contact.title">تواصل معنا</h3>
+                        <ul>
+                            <li><i class="fas fa-phone"></i> <span data-translate="footer.contact.phone">0566310983</span></li>
+                            <li><i class="fas fa-envelope"></i> <span data-translate="footer.contact.email">info@saudi-mile-market.com</span></li>
+                            <li><a href="https://wa.me/966566310983" target="_blank"><i class="fab fa-whatsapp"></i> <span data-translate="footer.contact.whatsapp">واتساب</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-translate="footer.copyright">© 2024 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
+            </div>
         `;
-        chatMessages.appendChild(userMessage);
-        
-        // Clear input
-        chatInput.value = '';
-        
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        
-        // Simulate response after a short delay
-        setTimeout(function() {
-            const responseMessage = document.createElement('div');
-            responseMessage.className = 'message system';
-            responseMessage.innerHTML = `
-                <p>${getTranslation('chat.responseText')}</p>
-                <span class="time">${getTranslation('chat.now')}</span>
-                <a href="https://wa.me/966566310983?text=${encodeURIComponent('مرحباً، لدي استفسار حول ' + messageText)}" target="_blank" class="whatsapp-chat-btn">
-                    <i class="fab fa-whatsapp"></i> ${getTranslation('chat.continueOnWhatsapp')}
-                </a>
-            `;
-            chatMessages.appendChild(responseMessage);
-            
-            // Scroll to bottom again
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1000);
+
+        // Apply translations to the footer content
+        const footerElements = document.querySelectorAll('#dynamic-footer [data-translate]');
+        footerElements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            const translation = getTranslation(key);
+            if (translation) {
+                element.textContent = translation;
+            }
+        });
     }
 
-    // Send message on button click
-    chatSendBtn.addEventListener('click', sendMessage);
-
-    // Send message on Enter key
-    chatInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+    // Function to initialize share navigation
+    function initShareNavigation() {
+        const shareButtons = document.querySelectorAll('.share-btn');
+        
+        if (shareButtons.length === 0) return;
+        
+        shareButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const platform = this.getAttribute('data-platform');
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent(document.title);
+                let shareUrl;
+                
+                switch(platform) {
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                        break;
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                        break;
+                    case 'whatsapp':
+                        shareUrl = `https://api.whatsapp.com/send?text=${title} ${url}`;
+                        break;
+                    case 'telegram':
+                        shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
+                        break;
+                    case 'copy':
+                        navigator.clipboard.writeText(window.location.href)
+                            .then(() => {
+                                const originalText = this.innerHTML;
+                                this.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+                                setTimeout(() => {
+                                    this.innerHTML = originalText;
+                                }, 2000);
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy: ', err);
+                            });
+                        return;
+                }
+                
+                if (shareUrl) {
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                }
+            });
+        });
+        
+        // Toggle share menu
+        const shareToggle = document.querySelector('.share-toggle');
+        if (shareToggle) {
+            shareToggle.addEventListener('click', function() {
+                const shareMenu = document.querySelector('.share-menu');
+                if (shareMenu) {
+                    shareMenu.classList.toggle('active');
+                    this.classList.toggle('active');
+                }
+            });
+            
+            // Close share menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.share-navigation')) {
+                    const shareMenu = document.querySelector('.share-menu');
+                    const shareToggle = document.querySelector('.share-toggle');
+                    if (shareMenu && shareMenu.classList.contains('active')) {
+                        shareMenu.classList.remove('active');
+                        shareToggle.classList.remove('active');
+                    }
+                }
+            });
         }
-    });
-} 
+    }
+
+    // Initialize Live Chat
+    function initLiveChat() {
+        const chatToggle = document.querySelector('.chat-toggle');
+        const chatContainer = document.querySelector('.chat-container');
+        const chatClose = document.querySelector('.chat-close');
+        const chatInput = document.getElementById('chat-message-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatMessages = document.querySelector('.chat-messages');
+        
+        // Toggle chat
+        chatToggle.addEventListener('click', function() {
+            chatContainer.classList.toggle('active');
+            // Focus on input when chat is opened
+            if (chatContainer.classList.contains('active')) {
+                setTimeout(() => chatInput.focus(), 300);
+            }
+        });
+        
+        // Close chat
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('active');
+        });
+        
+        // Send message function
+        function sendMessage() {
+            const messageText = chatInput.value.trim();
+            if (!messageText) return;
+            
+            // Create user message element
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.innerHTML = `
+                <p>${messageText}</p>
+                <span class="time">${getTranslation('chat.now')}</span>
+            `;
+            chatMessages.appendChild(userMessage);
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Simulate response after a short delay
+            setTimeout(function() {
+                const responseMessage = document.createElement('div');
+                responseMessage.className = 'message system';
+                responseMessage.innerHTML = `
+                    <p>${getTranslation('chat.responseText')}</p>
+                    <span class="time">${getTranslation('chat.now')}</span>
+                    <a href="https://wa.me/966566310983?text=${encodeURIComponent('مرحباً، لدي استفسار حول ' + messageText)}" target="_blank" class="whatsapp-chat-btn">
+                        <i class="fab fa-whatsapp"></i> ${getTranslation('chat.continueOnWhatsapp')}
+                    </a>
+                `;
+                chatMessages.appendChild(responseMessage);
+                
+                // Scroll to bottom again
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        // Send message on button click
+        chatSendBtn.addEventListener('click', sendMessage);
+
+        // Send message on Enter key
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+}); 

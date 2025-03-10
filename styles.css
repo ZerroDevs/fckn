@@ -3007,4 +3007,172 @@ body.dark-theme .terms-agreement p:last-child {
     .mobile-menu-toggle {
         display: block;
     }
+}
+
+/* Persistent Payment Popup Styles */
+.persistent-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.persistent-popup-content {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.5s ease-in-out;
+}
+
+body.dark-theme .persistent-popup-content {
+    background-color: #2d3748;
+    color: #fff;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+}
+
+.persistent-popup-icon {
+    font-size: 50px;
+    color: #e53e3e;
+    margin-bottom: 20px;
+}
+
+.persistent-popup-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #e53e3e;
+}
+
+.persistent-popup-text {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #4a5568;
+}
+
+body.dark-theme .persistent-popup-text {
+    color: #e2e8f0;
+}
+
+.persistent-popup-account {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #2b6cb0;
+    direction: ltr;
+}
+
+body.dark-theme .persistent-popup-account {
+    color: #63b3ed;
+}
+
+.persistent-popup-divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #cbd5e0, transparent);
+    margin: 20px 0;
+}
+
+body.dark-theme .persistent-popup-divider {
+    background: linear-gradient(to right, transparent, #4a5568, transparent);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 576px) {
+    .persistent-popup-content {
+        padding: 20px;
+    }
+    
+    .persistent-popup-title {
+        font-size: 20px;
+    }
+    
+    .persistent-popup-text {
+        font-size: 16px;
+    }
+    
+    .persistent-popup-account {
+        font-size: 20px;
+    }
+}
+
+.persistent-popup-footer {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+body.dark-theme .persistent-popup-footer {
+    color: #a0aec0;
+}
+
+.github-link {
+    color: #2b6cb0;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.github-link:hover {
+    color: #4299e1;
+    text-decoration: underline;
+}
+
+body.dark-theme .github-link {
+    color: #63b3ed;
+}
+
+body.dark-theme .github-link:hover {
+    color: #90cdf4;
+}
+
+@media (max-width: 576px) {
+    .persistent-popup-content {
+        padding: 20px;
+    }
+    
+    .persistent-popup-title {
+        font-size: 20px;
+    }
+    
+    .persistent-popup-text {
+        font-size: 16px;
+    }
+    
+    .persistent-popup-account {
+        font-size: 20px;
+    }
+    
+    .persistent-popup-footer {
+        font-size: 12px;
+    }
 } 
