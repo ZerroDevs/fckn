@@ -104,28 +104,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const nav = document.querySelector('nav');
         const menuOverlay = document.querySelector('.menu-overlay');
         const body = document.body;
+        const menuLinks = document.querySelectorAll('nav a:not(.dropdown-toggle)');
         
         if (!menuToggle || !nav || !menuOverlay) return;
         
-        menuToggle.addEventListener('click', function() {
-            menuToggle.classList.toggle('active');
-            nav.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            body.classList.toggle('menu-open');
-            
-            // Close all dropdowns when toggling menu
-            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-            dropdownToggles.forEach(toggle => {
-                toggle.classList.remove('active');
-                const dropdownMenu = toggle.nextElementSibling;
-                if (dropdownMenu) dropdownMenu.classList.remove('show');
-                const icon = toggle.querySelector('i');
-                if (icon) icon.style.transform = 'rotate(0deg)';
-            });
-        });
-        
-        // Close menu when clicking on overlay
-        menuOverlay.addEventListener('click', function() {
+        function closeMenu() {
             menuToggle.classList.remove('active');
             nav.classList.remove('active');
             menuOverlay.classList.remove('active');
@@ -140,15 +123,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const icon = toggle.querySelector('i');
                 if (icon) icon.style.transform = 'rotate(0deg)';
             });
+        }
+        
+        menuToggle.addEventListener('click', function() {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        });
+        
+        // Close menu when clicking on overlay
+        menuOverlay.addEventListener('click', closeMenu);
+        
+        // Close menu when clicking on links
+        menuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
         
         // Handle window resize
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768 && nav.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                body.classList.remove('menu-open');
+                closeMenu();
             }
         });
         
@@ -181,15 +176,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
-            dropdownToggles.forEach(toggle => {
-                if (toggle && !toggle.contains(e.target)) {
+            if (!e.target.closest('.dropdown')) {
+                dropdownToggles.forEach(toggle => {
                     toggle.classList.remove('active');
                     const dropdownMenu = toggle.nextElementSibling;
                     if (dropdownMenu) dropdownMenu.classList.remove('show');
                     const icon = toggle.querySelector('i');
                     if (icon) icon.style.transform = 'rotate(0deg)';
-                }
-            });
+                });
+            }
         });
     }
     
