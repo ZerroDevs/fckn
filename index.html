@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="animations.css">
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -315,34 +316,71 @@
     <section class="contact" id="contact">
         <div class="container">
             <h2 class="section-title">اتصل بنا</h2>
+            <p class="section-description">نحن هنا لمساعدتك في أي وقت. اختر الطريقة المناسبة للتواصل معنا</p>
+            
             <div class="contact-content">
-                <div class="contact-form">
-                    <div class="form-group">
-                        <label>الاسم</label>
-                        <input type="text" placeholder="الاسم" required>
-                    </div>
-                    <div class="form-group">
-                        <label>البريد الإلكتروني</label>
-                        <input type="email" placeholder="البريد الإلكتروني" required>
-                    </div>
-                    <div class="form-group">
-                        <label>الموضوع</label>
-                        <input type="text" placeholder="الموضوع" required>
-                    </div>
-                    <div class="form-group">
-                        <label>الرسالة</label>
-                        <textarea placeholder="الرسالة" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">إرسال الرسالة</button>
-                </div>
                 <div class="contact-info">
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <h3>0566310983</h3>
+                    <div class="contact-card">
+                        <div class="card-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>اتصل بنا</h3>
+                        <p>خدمة العملاء متوفرة على مدار الساعة</p>
+                        <a href="tel:0566310983" class="contact-link">0566310983</a>
                     </div>
-                    <div class="info-item email-item">
-                        <i class="fas fa-envelope"></i>
-                        <h3>info@saudi-mile-market.com</h3>
+
+                    <div class="contact-card">
+                        <div class="card-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>البريد الإلكتروني</h3>
+                        <p>نرد خلال 24 ساعة عمل</p>
+                        <a href="mailto:info@saudi-mile-market.com" class="contact-link">info@saudi-mile-market.com</a>
+                    </div>
+
+                    <a href="https://wa.me/966566310983" target="_blank" class="contact-card whatsapp-card">
+                        <div class="card-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3>واتساب</h3>
+                        <p>متوفر للرد السريع</p>
+                        <span class="whatsapp-link">
+                            <i class="fab fa-whatsapp"></i> تواصل معنا
+                        </span>
+                    </a>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <div class="contact-form">
+                        <h3>أرسل لنا رسالة</h3>
+                        <p>املأ النموذج وسنرد عليك في أقرب وقت ممكن</p>
+                        
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">الاسم</label>
+                                <input type="text" id="name" placeholder="الاسم" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني</label>
+                                <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">رقم الجوال</label>
+                                <input type="tel" id="phone" placeholder="رقم الجوال" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">الموضوع</label>
+                                <input type="text" id="subject" placeholder="الموضوع" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">الرسالة</label>
+                                <textarea id="message" placeholder="الرسالة" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                إرسال الرسالة
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -393,34 +431,7 @@
         </div>
     </div>
 
-    <!-- Live Chat Widget -->
-    <div class="chat-widget">
-        <div class="chat-toggle">
-            <i class="fas fa-comments"></i>
-        </div>
-        <div class="chat-container">
-            <div class="chat-header">
-                <h3>المحادثة المباشرة</h3>
-                <span class="chat-close">&times;</span>
-            </div>
-            <div class="chat-messages">
-                <div class="message system">
-                    <p>مرحباً بك في سوق الأميال السعودي! كيف يمكننا مساعدتك اليوم؟</p>
-                    <span class="time">الآن</span>
-                    <a href="https://wa.me/966566310983" target="_blank" class="whatsapp-chat-btn">
-                        <i class="fab fa-whatsapp"></i> <span>التواصل المباشر عبر واتساب</span>
-                    </a>
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="اكتب رسالتك هنا..." id="chat-message-input">
-                <button id="chat-send-btn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script src="script.js"></script>
+    <script src="enhancements.js"></script>
 </body>
 </html> 

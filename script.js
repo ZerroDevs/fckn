@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initThemeToggle();
         initMobileMenu();
         initShareNavigation();
-        initLiveChat();
         
         // Initialize sliders if they exist
         if (document.querySelector('.slider')) {
@@ -55,22 +54,98 @@ function updateHeaderStyle() {
 function initSlider() {
     const slider = document.querySelector('.slider');
     if (!slider) return;
-    
-    const slides = document.querySelectorAll('.slide');
+
+    const slides = slider.querySelectorAll('.slide');
+    if (slides.length === 0) return;
+
+    // Add navigation elements with RTL-appropriate icons
+    const nav = document.createElement('div');
+    nav.className = 'slider-nav';
+    nav.innerHTML = `
+        <button class="prev" aria-label="الشريحة السابقة">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="next" aria-label="الشريحة التالية">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    `;
+    slider.appendChild(nav);
+
+    // Add dots navigation
+    const dots = document.createElement('div');
+    dots.className = 'slider-dots';
+    slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (index === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `الانتقال إلى الشريحة ${index + 1}`);
+        dots.appendChild(dot);
+    });
+    slider.appendChild(dots);
+
     let currentSlide = 0;
-    
-    // Show first slide
-    slides[0].classList.add('active');
-    
-    // Auto slide function
-    function nextSlide() {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
+    let interval;
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        
+        // Update dots
+        dots.querySelectorAll('.slider-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
     }
-    
-    // Set interval for auto sliding
-    setInterval(nextSlide, 5000);
+
+    function nextSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length; // Changed direction for RTL
+        updateSlides();
+        resetInterval();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide + 1) % slides.length; // Changed direction for RTL
+        updateSlides();
+        resetInterval();
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        updateSlides();
+        resetInterval();
+    }
+
+    function resetInterval() {
+        clearInterval(interval);
+        interval = setInterval(nextSlide, 5000);
+    }
+
+    // Event Listeners
+    nav.querySelector('.prev').addEventListener('click', prevSlide);
+    nav.querySelector('.next').addEventListener('click', nextSlide);
+
+    dots.querySelectorAll('.slider-dot').forEach((dot, index) => {
+        dot.addEventListener('click', () => goToSlide(index));
+    });
+
+    // Touch events for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) {
+            prevSlide(); // Changed for RTL
+        } else if (touchEndX - touchStartX > 50) {
+            nextSlide(); // Changed for RTL
+        }
+    }, false);
+
+    // Start automatic slideshow
+    resetInterval();
 }
 
 // Function to load the dynamic footer
@@ -849,76 +924,4 @@ function initShareNavigation() {
             }
         });
     }
-}
-
-// Initialize Live Chat
-function initLiveChat() {
-    const chatToggle = document.querySelector('.chat-toggle');
-    const chatContainer = document.querySelector('.chat-container');
-    const chatClose = document.querySelector('.chat-close');
-    const chatInput = document.getElementById('chat-message-input');
-    const chatSendBtn = document.getElementById('chat-send-btn');
-    const chatMessages = document.querySelector('.chat-messages');
-    
-    // Toggle chat
-    chatToggle.addEventListener('click', function() {
-        chatContainer.classList.toggle('active');
-        // Focus on input when chat is opened
-        if (chatContainer.classList.contains('active')) {
-            setTimeout(() => chatInput.focus(), 300);
-        }
-    });
-    
-    // Close chat
-    chatClose.addEventListener('click', function() {
-        chatContainer.classList.remove('active');
-    });
-    
-    // Send message function
-    function sendMessage() {
-        const messageText = chatInput.value.trim();
-        if (!messageText) return;
-        
-        // Create user message element
-        const userMessage = document.createElement('div');
-        userMessage.className = 'message user';
-        userMessage.innerHTML = `
-            <p>${messageText}</p>
-            <span class="time">${getTranslation('chat.now')}</span>
-        `;
-        chatMessages.appendChild(userMessage);
-        
-        // Clear input
-        chatInput.value = '';
-        
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        
-        // Simulate response after a short delay
-        setTimeout(function() {
-            const responseMessage = document.createElement('div');
-            responseMessage.className = 'message system';
-            responseMessage.innerHTML = `
-                <p>${getTranslation('chat.responseText')}</p>
-                <span class="time">${getTranslation('chat.now')}</span>
-                <a href="https://wa.me/966566310983?text=${encodeURIComponent('مرحباً، لدي استفسار حول ' + messageText)}" target="_blank" class="whatsapp-chat-btn">
-                    <i class="fab fa-whatsapp"></i> ${getTranslation('chat.continueOnWhatsapp')}
-                </a>
-            `;
-            chatMessages.appendChild(responseMessage);
-            
-            // Scroll to bottom again
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1000);
-    }
-
-    // Send message on button click
-    chatSendBtn.addEventListener('click', sendMessage);
-
-    // Send message on Enter key
-    chatInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
 } 
