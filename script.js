@@ -945,7 +945,7 @@ function updateHeaderStyle() {
         header.classList.remove('scrolled');
     }
 }
-
+//
 // Function to initialize slider
 function initSlider() {
     const slider = document.querySelector('.slider');
