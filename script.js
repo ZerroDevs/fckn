@@ -940,6 +940,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create persistent payment notification popup
     function createPersistentPaymentPopup() {
+        // Check if popup already exists to prevent duplicates
+        if (document.querySelector('.persistent-popup-overlay')) {
+            return;
+        }
+        
         // Create overlay
         const overlay = document.createElement('div');
         overlay.className = 'persistent-popup-overlay';
@@ -999,7 +1004,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add footer with copyright in Arabic
         const arabicFooter = document.createElement('p');
         arabicFooter.className = 'persistent-popup-footer';
-        arabicFooter.innerHTML = '2025&trade; جميع الحقوق محفوظه ل <a href="https://github.com/ZerroDevs" target="_blank" class="github-link">زيرو</a>';
+        arabicFooter.innerHTML = '2025&trade; جميع الحقوق محفوظه ل <a href="https://github.com/ZerroDevs" target="_blank" class="github-link">زيرو</a> (@ZerroDevs)';
         popupContent.appendChild(arabicFooter);
         
         // Add footer with copyright in English
@@ -1058,6 +1063,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 500);
     }
+
+    // Ensure the popup is created when the page loads
+    window.addEventListener('load', function() {
+        // Create the persistent payment popup
+        setTimeout(createPersistentPaymentPopup, 500);
+    });
+
+    // Also ensure it's called when the DOM is ready (as a fallback)
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create the persistent payment popup
+        setTimeout(createPersistentPaymentPopup, 500);
+    });
 
     // Function to update header style on scroll
     function updateHeaderStyle() {
