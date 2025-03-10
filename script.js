@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize theme toggle and other components
     loadDynamicFooter();
-    
+
     // Lazy load other components
     window.addEventListener('load', function() {
         // Initialize other components after page load
@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Function to update header style on scroll
-function updateHeaderStyle() {
+    function updateHeaderStyle() {
     const header = document.querySelector('header');
-    if (window.scrollY > 50) {
+        if (window.scrollY > 50) {
         header.classList.add('scrolled');
-    } else {
+            } else {
         header.classList.remove('scrolled');
     }
 }
@@ -237,51 +237,51 @@ function loadDynamicFooter() {
 }
 
 // Function to initialize theme toggle functionality
-function initThemeToggle() {
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    if (!themeToggleBtn) return;
-    
-    const body = document.body;
-    
-    // Check for saved theme preference or use default
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    body.classList.toggle('dark-theme', savedTheme === 'dark');
-    
-    themeToggleBtn.addEventListener('click', function() {
-        body.classList.toggle('dark-theme');
-        const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
-        localStorage.setItem('theme', currentTheme);
+    function initThemeToggle() {
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        if (!themeToggleBtn) return;
         
-        // Update header style when theme changes
-        updateHeaderStyle();
-    });
-}
-
-// Initialize mobile menu functionality
-function initMobileMenu() {
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.querySelector('nav');
-    const menuOverlay = document.querySelector('.menu-overlay');
-    const body = document.body;
-    const menuLinks = document.querySelectorAll('nav a:not(.dropdown-toggle)');
-    
-    if (!menuToggle || !nav || !menuOverlay) return;
-    
-    function closeMenu() {
-        menuToggle.classList.remove('active');
-        nav.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        body.classList.remove('menu-open');
+        const body = document.body;
         
-        // Close all dropdowns
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
-            toggle.classList.remove('active');
-            const dropdownMenu = toggle.nextElementSibling;
-            if (dropdownMenu) dropdownMenu.classList.remove('show');
-            const icon = toggle.querySelector('i');
-            if (icon) icon.style.transform = 'rotate(0deg)';
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.classList.toggle('dark-theme', savedTheme === 'dark');
+        
+        themeToggleBtn.addEventListener('click', function() {
+            body.classList.toggle('dark-theme');
+            const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', currentTheme);
+            
+            // Update header style when theme changes
+            updateHeaderStyle();
         });
+    }
+    
+    // Initialize mobile menu functionality
+    function initMobileMenu() {
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const nav = document.querySelector('nav');
+        const menuOverlay = document.querySelector('.menu-overlay');
+        const body = document.body;
+    const menuLinks = document.querySelectorAll('nav a:not(.dropdown-toggle)');
+        
+        if (!menuToggle || !nav || !menuOverlay) return;
+        
+    function closeMenu() {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            
+            // Close all dropdowns
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.classList.remove('active');
+                const dropdownMenu = toggle.nextElementSibling;
+                if (dropdownMenu) dropdownMenu.classList.remove('show');
+                const icon = toggle.querySelector('i');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            });
     }
     
     menuToggle.addEventListener('click', function() {
@@ -297,286 +297,257 @@ function initMobileMenu() {
     // Close menu when clicking on links
     menuLinks.forEach(link => {
         link.addEventListener('click', closeMenu);
-    });
-    
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && nav.classList.contains('active')) {
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && nav.classList.contains('active')) {
             closeMenu();
-        }
-    });
-    
-    // Initialize dropdown toggles for mobile
-    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-    dropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Close other dropdowns
-            dropdownToggles.forEach(otherToggle => {
-                if (otherToggle !== toggle) {
-                    otherToggle.classList.remove('active');
-                    const otherMenu = otherToggle.nextElementSibling;
-                    if (otherMenu) otherMenu.classList.remove('show');
-                    const otherIcon = otherToggle.querySelector('i');
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                }
-            });
-            
-            this.classList.toggle('active');
-            const dropdownMenu = this.nextElementSibling;
-            dropdownMenu.classList.toggle('show');
-            const icon = this.querySelector('i');
-            if (icon) {
-                icon.style.transform = this.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-            }
-        });
-    });
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdownToggles.forEach(toggle => {
-                toggle.classList.remove('active');
-                const dropdownMenu = toggle.nextElementSibling;
-                if (dropdownMenu) dropdownMenu.classList.remove('show');
-                const icon = toggle.querySelector('i');
-                if (icon) icon.style.transform = 'rotate(0deg)';
-            });
-        }
-    });
-}
-
-// Initialize FAQ toggles
-function initFaqToggles() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    const faqCategoryBtns = document.querySelectorAll('.faq-category-btn');
-    const searchInput = document.getElementById('faq-search-input');
-    const searchClearBtn = document.getElementById('faq-search-clear');
-    const resetSearchBtn = document.querySelector('.reset-search-btn');
-    const noResultsSection = document.querySelector('.faq-no-results');
-    
-    // Add animation classes to FAQ items with a staggered delay
-    faqItems.forEach((item, index) => {
-        setTimeout(() => {
-            item.style.animation = 'fadeInUp 0.5s ease forwards';
-            item.style.opacity = '1';
-        }, index * 100);
-    });
-
-    // Initialize FAQ toggles
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        
-        // Set initial state
-        if (item.classList.contains('active')) {
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-            answer.style.opacity = '1';
-            answer.style.transform = 'translateY(0)';
-        } else {
-            answer.style.maxHeight = '0';
-            answer.style.opacity = '0';
-            answer.style.transform = 'translateY(-10px)';
-        }
-        
-        question.addEventListener('click', () => {
-            // Toggle active class
-            const isActive = item.classList.contains('active');
-            
-            // Close all other items first
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    otherAnswer.style.maxHeight = '0';
-                    otherAnswer.style.opacity = '0';
-                    otherAnswer.style.transform = 'translateY(-10px)';
-                }
-            });
-            
-            // Toggle current item
-            if (isActive) {
-                item.classList.remove('active');
-                answer.style.maxHeight = '0';
-                answer.style.opacity = '0';
-                answer.style.transform = 'translateY(-10px)';
-            } else {
-                item.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-                answer.style.opacity = '1';
-                answer.style.transform = 'translateY(0)';
             }
         });
         
-        // Add hover effect
-        item.addEventListener('mouseenter', () => {
-            if (!item.classList.contains('active')) {
-                question.style.backgroundColor = 'rgba(25, 118, 210, 0.05)';
-            }
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            if (!item.classList.contains('active')) {
-                question.style.backgroundColor = '';
-            }
-        });
-    });
-    
-    // Category filtering
-    if (faqCategoryBtns.length > 0) {
-        faqCategoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                faqCategoryBtns.forEach(otherBtn => {
-                    otherBtn.classList.remove('active');
-                });
+        // Initialize dropdown toggles for mobile
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                // Add active class to clicked button
-                btn.classList.add('active');
-                
-                const category = btn.getAttribute('data-category');
-                
-                // Filter items
-                filterFaqItems(category, searchInput.value.trim());
-            });
-        });
-    }
-    
-    // Search functionality
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            const searchValue = searchInput.value.trim();
-            const activeCategory = document.querySelector('.faq-category-btn.active');
-            const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
-            
-            // Show/hide clear button
-            if (searchValue.length > 0) {
-                searchClearBtn.classList.add('visible');
-            } else {
-                searchClearBtn.classList.remove('visible');
-            }
-            
-            // Filter items
-            filterFaqItems(category, searchValue);
-        });
-        
-        // Clear search
-        if (searchClearBtn) {
-            searchClearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                searchClearBtn.classList.remove('visible');
-                
-                const activeCategory = document.querySelector('.faq-category-btn.active');
-                const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
-                
-                // Filter items
-                filterFaqItems(category, '');
-            });
-        }
-        
-        // Reset search button
-        if (resetSearchBtn) {
-            resetSearchBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                searchClearBtn.classList.remove('visible');
-                
-                // Reset category to "all"
-                faqCategoryBtns.forEach(btn => {
-                    if (btn.getAttribute('data-category') === 'all') {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
+                // Close other dropdowns
+                dropdownToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        otherToggle.classList.remove('active');
+                        const otherMenu = otherToggle.nextElementSibling;
+                        if (otherMenu) otherMenu.classList.remove('show');
+                        const otherIcon = otherToggle.querySelector('i');
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
                     }
                 });
                 
-                // Show all items
-                filterFaqItems('all', '');
-            });
-        }
-    }
-    
-    // Filter FAQ items based on category and search
-    function filterFaqItems(category, searchValue) {
-        let visibleCount = 0;
-        
-        faqItems.forEach(item => {
-            const itemCategory = item.getAttribute('data-category');
-            const questionText = item.querySelector('.faq-question h3').textContent.toLowerCase();
-            const answerText = item.querySelector('.faq-answer p').textContent.toLowerCase();
-            
-            const matchesCategory = category === 'all' || itemCategory === category;
-            const matchesSearch = searchValue === '' || 
-                                 questionText.includes(searchValue.toLowerCase()) || 
-                                 answerText.includes(searchValue.toLowerCase());
-            
-            if (matchesCategory && matchesSearch) {
-                item.style.display = '';
-                visibleCount++;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-        
-        // Show/hide no results message
-        if (visibleCount === 0 && noResultsSection) {
-            noResultsSection.style.display = 'block';
-        } else if (noResultsSection) {
-            noResultsSection.style.display = 'none';
-        }
-    }
-}
-
-// Function to initialize Terms toggles and filters
-function initTermsToggles() {
-    const termsItems = document.querySelectorAll('.terms-item');
-    const termsCategoryButtons = document.querySelectorAll('.terms-category-btn');
-    const termsSearchInput = document.getElementById('terms-search-input');
-    const termsClearButton = document.getElementById('terms-clear-button');
-    const termsResetButton = document.getElementById('terms-reset-button');
-    const termsNoResults = document.querySelector('.terms-no-results');
-
-    // Add animation classes with staggered delay
-    termsItems.forEach((item, index) => {
-        setTimeout(() => {
-            item.style.opacity = '1';
-            item.classList.add('fade-in-up');
-        }, 100 * index);
-    });
-
-    // Set initial state of terms answers
-    termsItems.forEach(item => {
-        const termsAnswer = item.querySelector('.terms-answer');
-        if (item.classList.contains('active')) {
-            termsAnswer.style.maxHeight = termsAnswer.scrollHeight + 'px';
-            termsAnswer.style.opacity = '1';
-        } else {
-            termsAnswer.style.maxHeight = '0';
-            termsAnswer.style.opacity = '0';
-        }
-    });
-
-    // Add click event to terms questions
-    termsItems.forEach(item => {
-        const termsQuestion = item.querySelector('.terms-question');
-        const termsAnswer = item.querySelector('.terms-answer');
-
-        termsQuestion.addEventListener('click', () => {
-            // Close other items
-            termsItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                    const otherAnswer = otherItem.querySelector('.terms-answer');
-                    otherAnswer.style.maxHeight = '0';
-                    otherAnswer.style.opacity = '0';
+                this.classList.toggle('active');
+                const dropdownMenu = this.nextElementSibling;
+                dropdownMenu.classList.toggle('show');
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.style.transform = this.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
                 }
             });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdownToggles.forEach(toggle => {
+                    toggle.classList.remove('active');
+                    const dropdownMenu = toggle.nextElementSibling;
+                    if (dropdownMenu) dropdownMenu.classList.remove('show');
+                    const icon = toggle.querySelector('i');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+            });
+                }
+        });
+    }
+    
+    // Initialize FAQ toggles
+    function initFaqToggles() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        const faqCategoryBtns = document.querySelectorAll('.faq-category-btn');
+        const searchInput = document.getElementById('faq-search-input');
+        const searchClearBtn = document.getElementById('faq-search-clear');
+        const resetSearchBtn = document.querySelector('.reset-search-btn');
+        const noResultsSection = document.querySelector('.faq-no-results');
+        
+        // Add animation classes to FAQ items with a staggered delay
+        faqItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.animation = 'fadeInUp 0.5s ease forwards';
+                item.style.opacity = '1';
+            }, index * 100);
+        });
 
-            // Toggle active class
-            const isActive = item.classList.toggle('active');
+        // Initialize FAQ toggles
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
             
-            // Animate the answer
-            if (isActive) {
+            // Set initial state
+            if (item.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                answer.style.opacity = '1';
+                answer.style.transform = 'translateY(0)';
+            } else {
+                answer.style.maxHeight = '0';
+                answer.style.opacity = '0';
+                answer.style.transform = 'translateY(-10px)';
+            }
+            
+            question.addEventListener('click', () => {
+                // Toggle active class
+                const isActive = item.classList.contains('active');
+                
+                // Close all other items first
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        otherAnswer.style.maxHeight = '0';
+                        otherAnswer.style.opacity = '0';
+                        otherAnswer.style.transform = 'translateY(-10px)';
+                    }
+                });
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                    answer.style.maxHeight = '0';
+                    answer.style.opacity = '0';
+                    answer.style.transform = 'translateY(-10px)';
+                } else {
+                    item.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.style.opacity = '1';
+                    answer.style.transform = 'translateY(0)';
+                }
+            });
+            
+            // Add hover effect
+            item.addEventListener('mouseenter', () => {
+                if (!item.classList.contains('active')) {
+                    question.style.backgroundColor = 'rgba(25, 118, 210, 0.05)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                if (!item.classList.contains('active')) {
+                    question.style.backgroundColor = '';
+                }
+            });
+        });
+        
+        // Category filtering
+        if (faqCategoryBtns.length > 0) {
+            faqCategoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    faqCategoryBtns.forEach(otherBtn => {
+                        otherBtn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    const category = btn.getAttribute('data-category');
+                    
+                    // Filter items
+                    filterFaqItems(category, searchInput.value.trim());
+                });
+            });
+        }
+        
+        // Search functionality
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim();
+                const activeCategory = document.querySelector('.faq-category-btn.active');
+                const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
+                
+                // Show/hide clear button
+                if (searchValue.length > 0) {
+                    searchClearBtn.classList.add('visible');
+                } else {
+                    searchClearBtn.classList.remove('visible');
+                }
+                
+                // Filter items
+                filterFaqItems(category, searchValue);
+            });
+            
+            // Clear search
+            if (searchClearBtn) {
+                searchClearBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchClearBtn.classList.remove('visible');
+                    
+                    const activeCategory = document.querySelector('.faq-category-btn.active');
+                    const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
+                    
+                    // Filter items
+                    filterFaqItems(category, '');
+                });
+            }
+            
+            // Reset search button
+            if (resetSearchBtn) {
+                resetSearchBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchClearBtn.classList.remove('visible');
+                    
+                    // Reset category to "all"
+                    faqCategoryBtns.forEach(btn => {
+                        if (btn.getAttribute('data-category') === 'all') {
+                            btn.classList.add('active');
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+                    
+                    // Show all items
+                    filterFaqItems('all', '');
+                });
+            }
+        }
+        
+        // Filter FAQ items based on category and search
+        function filterFaqItems(category, searchValue) {
+            let visibleCount = 0;
+            
+            faqItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                const questionText = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                
+                const matchesCategory = category === 'all' || itemCategory === category;
+                const matchesSearch = searchValue === '' || 
+                                     questionText.includes(searchValue.toLowerCase()) || 
+                                     answerText.includes(searchValue.toLowerCase());
+                
+                if (matchesCategory && matchesSearch) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show/hide no results message
+            if (visibleCount === 0 && noResultsSection) {
+                noResultsSection.style.display = 'block';
+            } else if (noResultsSection) {
+                noResultsSection.style.display = 'none';
+            }
+        }
+    }
+
+    // Function to initialize Terms toggles and filters
+    function initTermsToggles() {
+        const termsItems = document.querySelectorAll('.terms-item');
+        const termsCategoryButtons = document.querySelectorAll('.terms-category-btn');
+        const termsSearchInput = document.getElementById('terms-search-input');
+        const termsClearButton = document.getElementById('terms-clear-button');
+        const termsResetButton = document.getElementById('terms-reset-button');
+        const termsNoResults = document.querySelector('.terms-no-results');
+
+        // Add animation classes with staggered delay
+        termsItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.classList.add('fade-in-up');
+            }, 100 * index);
+        });
+
+        // Set initial state of terms answers
+        termsItems.forEach(item => {
+            const termsAnswer = item.querySelector('.terms-answer');
+            if (item.classList.contains('active')) {
                 termsAnswer.style.maxHeight = termsAnswer.scrollHeight + 'px';
                 termsAnswer.style.opacity = '1';
             } else {
@@ -585,170 +556,170 @@ function initTermsToggles() {
             }
         });
 
-        // Add hover effect
-        termsQuestion.addEventListener('mouseenter', () => {
-            if (!item.classList.contains('active')) {
-                termsQuestion.style.backgroundColor = 'rgba(25, 118, 210, 0.05)';
-            }
-        });
+        // Add click event to terms questions
+        termsItems.forEach(item => {
+            const termsQuestion = item.querySelector('.terms-question');
+            const termsAnswer = item.querySelector('.terms-answer');
 
-        termsQuestion.addEventListener('mouseleave', () => {
-            if (!item.classList.contains('active')) {
-                termsQuestion.style.backgroundColor = '';
-            }
-        });
-    });
+            termsQuestion.addEventListener('click', () => {
+                // Close other items
+                termsItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.terms-answer');
+                        otherAnswer.style.maxHeight = '0';
+                        otherAnswer.style.opacity = '0';
+                    }
+                });
 
-    // Add click event to category buttons
-    termsCategoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons
-            termsCategoryButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            button.classList.add('active');
-            
-            // Get the category from the button's data attribute
-            const category = button.getAttribute('data-category');
-            
-            // Filter the terms items
-            filterTermsItems(category, termsSearchInput.value.toLowerCase());
-        });
-    });
-
-    // Add input event to search input
-    termsSearchInput.addEventListener('input', () => {
-        const activeCategory = document.querySelector('.terms-category-btn.active');
-        const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
-        
-        filterTermsItems(category, termsSearchInput.value.toLowerCase());
-        
-        // Show/hide clear button
-        if (termsSearchInput.value.length > 0) {
-            termsClearButton.style.display = 'flex';
-        } else {
-            termsClearButton.style.display = 'none';
-        }
-    });
-
-    // Add click event to clear button
-    if (termsClearButton) {
-        termsClearButton.addEventListener('click', () => {
-            termsSearchInput.value = '';
-            termsClearButton.style.display = 'none';
-            
-            const activeCategory = document.querySelector('.terms-category-btn.active');
-            const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
-            
-            filterTermsItems(category, '');
-        });
-    }
-
-    // Add click event to reset button
-    if (termsResetButton) {
-        termsResetButton.addEventListener('click', () => {
-            // Clear search input
-            termsSearchInput.value = '';
-            termsClearButton.style.display = 'none';
-            
-            // Reset category buttons
-            termsCategoryButtons.forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.terms-category-btn[data-category="all"]').classList.add('active');
-            
-            // Show all terms items
-            filterTermsItems('all', '');
-        });
-    }
-}
-
-// Filter terms items based on category and search input
-function filterTermsItems(category, searchValue) {
-    const termsItems = document.querySelectorAll('.terms-item');
-    const termsNoResults = document.querySelector('.terms-no-results');
-    let visibleCount = 0;
-
-    termsItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-        const termsQuestion = item.querySelector('.terms-question h3');
-        const termsAnswer = item.querySelector('.terms-answer');
-        
-        // Check if the item matches the selected category
-        const categoryMatch = category === 'all' || itemCategory === category;
-        
-        // Check if the item matches the search value
-        const searchMatch = searchValue === '' || 
-            termsQuestion.textContent.toLowerCase().includes(searchValue) || 
-            termsAnswer.textContent.toLowerCase().includes(searchValue);
-        
-        // Show/hide the item based on category and search matches
-        if (categoryMatch && searchMatch) {
-            item.style.display = 'block';
-            visibleCount++;
-        } else {
-            item.style.display = 'none';
-        }
-    });
-
-    // Show/hide no results message
-    if (termsNoResults) {
-        if (visibleCount === 0) {
-            termsNoResults.style.display = 'block';
-        } else {
-            termsNoResults.style.display = 'none';
-        }
-    }
-}
-
-// Function to initialize Refund toggles and filters
-function initRefundToggles() {
-    const refundItems = document.querySelectorAll('.refund-item');
-    const refundCategoryButtons = document.querySelectorAll('.refund-category-btn');
-    const refundSearchInput = document.getElementById('refund-search-input');
-    const refundClearButton = document.getElementById('refund-clear-button');
-    const refundResetButton = document.getElementById('refund-reset-button');
-    const refundNoResults = document.querySelector('.refund-no-results');
-
-    // Add animation classes with staggered delay
-    refundItems.forEach((item, index) => {
-        setTimeout(() => {
-            item.style.opacity = '1';
-            item.classList.add('fade-in-up');
-        }, 100 * index);
-    });
-
-    // Set initial state of refund answers
-    refundItems.forEach(item => {
-        const refundAnswer = item.querySelector('.refund-answer');
-        if (item.classList.contains('active')) {
-            refundAnswer.style.maxHeight = refundAnswer.scrollHeight + 'px';
-            refundAnswer.style.opacity = '1';
-        } else {
-            refundAnswer.style.maxHeight = '0';
-            refundAnswer.style.opacity = '0';
-        }
-    });
-
-    // Add click event to refund questions
-    refundItems.forEach(item => {
-        const refundQuestion = item.querySelector('.refund-question');
-        const refundAnswer = item.querySelector('.refund-answer');
-
-        refundQuestion.addEventListener('click', () => {
-            // Close other items
-            refundItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                    const otherAnswer = otherItem.querySelector('.refund-answer');
-                    otherAnswer.style.maxHeight = '0';
-                    otherAnswer.style.opacity = '0';
+                // Toggle active class
+                const isActive = item.classList.toggle('active');
+                
+                // Animate the answer
+                if (isActive) {
+                    termsAnswer.style.maxHeight = termsAnswer.scrollHeight + 'px';
+                    termsAnswer.style.opacity = '1';
+                } else {
+                    termsAnswer.style.maxHeight = '0';
+                    termsAnswer.style.opacity = '0';
                 }
             });
 
-            // Toggle active class
-            const isActive = item.classList.toggle('active');
+            // Add hover effect
+            termsQuestion.addEventListener('mouseenter', () => {
+                if (!item.classList.contains('active')) {
+                    termsQuestion.style.backgroundColor = 'rgba(25, 118, 210, 0.05)';
+                }
+            });
+
+            termsQuestion.addEventListener('mouseleave', () => {
+                if (!item.classList.contains('active')) {
+                    termsQuestion.style.backgroundColor = '';
+                }
+            });
+        });
+
+        // Add click event to category buttons
+        termsCategoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                termsCategoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get the category from the button's data attribute
+                const category = button.getAttribute('data-category');
+                
+                // Filter the terms items
+                filterTermsItems(category, termsSearchInput.value.toLowerCase());
+            });
+        });
+
+        // Add input event to search input
+        termsSearchInput.addEventListener('input', () => {
+            const activeCategory = document.querySelector('.terms-category-btn.active');
+            const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
             
-            // Animate the answer
-            if (isActive) {
+            filterTermsItems(category, termsSearchInput.value.toLowerCase());
+            
+            // Show/hide clear button
+            if (termsSearchInput.value.length > 0) {
+                termsClearButton.style.display = 'flex';
+            } else {
+                termsClearButton.style.display = 'none';
+            }
+        });
+
+        // Add click event to clear button
+        if (termsClearButton) {
+            termsClearButton.addEventListener('click', () => {
+                termsSearchInput.value = '';
+                termsClearButton.style.display = 'none';
+                
+                const activeCategory = document.querySelector('.terms-category-btn.active');
+                const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
+                
+                filterTermsItems(category, '');
+            });
+        }
+
+        // Add click event to reset button
+        if (termsResetButton) {
+            termsResetButton.addEventListener('click', () => {
+                // Clear search input
+                termsSearchInput.value = '';
+                termsClearButton.style.display = 'none';
+                
+                // Reset category buttons
+                termsCategoryButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.terms-category-btn[data-category="all"]').classList.add('active');
+                
+                // Show all terms items
+                filterTermsItems('all', '');
+            });
+        }
+    }
+
+    // Filter terms items based on category and search input
+    function filterTermsItems(category, searchValue) {
+        const termsItems = document.querySelectorAll('.terms-item');
+        const termsNoResults = document.querySelector('.terms-no-results');
+        let visibleCount = 0;
+
+        termsItems.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            const termsQuestion = item.querySelector('.terms-question h3');
+            const termsAnswer = item.querySelector('.terms-answer');
+            
+            // Check if the item matches the selected category
+            const categoryMatch = category === 'all' || itemCategory === category;
+            
+            // Check if the item matches the search value
+            const searchMatch = searchValue === '' || 
+                termsQuestion.textContent.toLowerCase().includes(searchValue) || 
+                termsAnswer.textContent.toLowerCase().includes(searchValue);
+            
+            // Show/hide the item based on category and search matches
+            if (categoryMatch && searchMatch) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Show/hide no results message
+        if (termsNoResults) {
+            if (visibleCount === 0) {
+                termsNoResults.style.display = 'block';
+            } else {
+                termsNoResults.style.display = 'none';
+            }
+        }
+    }
+
+    // Function to initialize Refund toggles and filters
+    function initRefundToggles() {
+        const refundItems = document.querySelectorAll('.refund-item');
+        const refundCategoryButtons = document.querySelectorAll('.refund-category-btn');
+        const refundSearchInput = document.getElementById('refund-search-input');
+        const refundClearButton = document.getElementById('refund-clear-button');
+        const refundResetButton = document.getElementById('refund-reset-button');
+        const refundNoResults = document.querySelector('.refund-no-results');
+
+        // Add animation classes with staggered delay
+        refundItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.classList.add('fade-in-up');
+            }, 100 * index);
+        });
+
+        // Set initial state of refund answers
+        refundItems.forEach(item => {
+            const refundAnswer = item.querySelector('.refund-answer');
+            if (item.classList.contains('active')) {
                 refundAnswer.style.maxHeight = refundAnswer.scrollHeight + 'px';
                 refundAnswer.style.opacity = '1';
             } else {
@@ -757,118 +728,147 @@ function initRefundToggles() {
             }
         });
 
-        // Add hover effect
-        refundQuestion.addEventListener('mouseenter', () => {
-            if (!item.classList.contains('active')) {
-                refundQuestion.style.backgroundColor = 'rgba(25, 118, 210, 0.05)';
-            }
+        // Add click event to refund questions
+        refundItems.forEach(item => {
+            const refundQuestion = item.querySelector('.refund-question');
+            const refundAnswer = item.querySelector('.refund-answer');
+
+            refundQuestion.addEventListener('click', () => {
+                // Close other items
+                refundItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.refund-answer');
+                        otherAnswer.style.maxHeight = '0';
+                        otherAnswer.style.opacity = '0';
+                    }
+                });
+
+                // Toggle active class
+                const isActive = item.classList.toggle('active');
+                
+                // Animate the answer
+                if (isActive) {
+                    refundAnswer.style.maxHeight = refundAnswer.scrollHeight + 'px';
+                    refundAnswer.style.opacity = '1';
+                } else {
+                    refundAnswer.style.maxHeight = '0';
+                    refundAnswer.style.opacity = '0';
+                }
+            });
+
+            // Add hover effect
+            refundQuestion.addEventListener('mouseenter', () => {
+                if (!item.classList.contains('active')) {
+                    refundQuestion.style.backgroundColor = 'rgba(25, 118, 210, 0.05)';
+                }
+            });
+
+            refundQuestion.addEventListener('mouseleave', () => {
+                if (!item.classList.contains('active')) {
+                    refundQuestion.style.backgroundColor = '';
+                }
+            });
         });
 
-        refundQuestion.addEventListener('mouseleave', () => {
-            if (!item.classList.contains('active')) {
-                refundQuestion.style.backgroundColor = '';
-            }
+        // Add click event to category buttons
+        refundCategoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                refundCategoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get the category from the button's data attribute
+                const category = button.getAttribute('data-category');
+                
+                // Filter the refund items
+                filterRefundItems(category, refundSearchInput.value.toLowerCase());
+            });
         });
-    });
 
-    // Add click event to category buttons
-    refundCategoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons
-            refundCategoryButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            button.classList.add('active');
-            
-            // Get the category from the button's data attribute
-            const category = button.getAttribute('data-category');
-            
-            // Filter the refund items
-            filterRefundItems(category, refundSearchInput.value.toLowerCase());
-        });
-    });
-
-    // Add input event to search input
-    refundSearchInput.addEventListener('input', () => {
-        const activeCategory = document.querySelector('.refund-category-btn.active');
-        const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
-        
-        filterRefundItems(category, refundSearchInput.value.toLowerCase());
-        
-        // Show/hide clear button
-        if (refundSearchInput.value.length > 0) {
-            refundClearButton.style.display = 'flex';
-        } else {
-            refundClearButton.style.display = 'none';
-        }
-    });
-
-    // Add click event to clear button
-    if (refundClearButton) {
-        refundClearButton.addEventListener('click', () => {
-            refundSearchInput.value = '';
-            refundClearButton.style.display = 'none';
-            
+        // Add input event to search input
+        refundSearchInput.addEventListener('input', () => {
             const activeCategory = document.querySelector('.refund-category-btn.active');
             const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
             
-            filterRefundItems(category, '');
-        });
-    }
-
-    // Add click event to reset button
-    if (refundResetButton) {
-        refundResetButton.addEventListener('click', () => {
-            // Clear search input
-            refundSearchInput.value = '';
-            refundClearButton.style.display = 'none';
+            filterRefundItems(category, refundSearchInput.value.toLowerCase());
             
-            // Reset category buttons
-            refundCategoryButtons.forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.refund-category-btn[data-category="all"]').classList.add('active');
-            
-            // Show all refund items
-            filterRefundItems('all', '');
+            // Show/hide clear button
+            if (refundSearchInput.value.length > 0) {
+                refundClearButton.style.display = 'flex';
+            } else {
+                refundClearButton.style.display = 'none';
+            }
         });
-    }
-}
 
-// Filter refund items based on category and search input
-function filterRefundItems(category, searchValue) {
-    const refundItems = document.querySelectorAll('.refund-item');
-    const refundNoResults = document.querySelector('.refund-no-results');
-    let visibleCount = 0;
-
-    refundItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-        const refundQuestion = item.querySelector('.refund-question h3');
-        const refundAnswer = item.querySelector('.refund-answer');
-        
-        // Check if the item matches the selected category
-        const categoryMatch = category === 'all' || itemCategory === category;
-        
-        // Check if the item matches the search value
-        const searchMatch = searchValue === '' || 
-            refundQuestion.textContent.toLowerCase().includes(searchValue) || 
-            refundAnswer.textContent.toLowerCase().includes(searchValue);
-        
-        // Show/hide the item based on category and search matches
-        if (categoryMatch && searchMatch) {
-            item.style.display = 'block';
-            visibleCount++;
-        } else {
-            item.style.display = 'none';
+        // Add click event to clear button
+        if (refundClearButton) {
+            refundClearButton.addEventListener('click', () => {
+                refundSearchInput.value = '';
+                refundClearButton.style.display = 'none';
+                
+                const activeCategory = document.querySelector('.refund-category-btn.active');
+                const category = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
+                
+                filterRefundItems(category, '');
+            });
         }
-    });
 
-    // Show/hide no results message
-    if (refundNoResults) {
-        if (visibleCount === 0) {
-            refundNoResults.style.display = 'block';
-        } else {
-            refundNoResults.style.display = 'none';
+        // Add click event to reset button
+        if (refundResetButton) {
+            refundResetButton.addEventListener('click', () => {
+                // Clear search input
+                refundSearchInput.value = '';
+                refundClearButton.style.display = 'none';
+                
+                // Reset category buttons
+                refundCategoryButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.refund-category-btn[data-category="all"]').classList.add('active');
+                
+                // Show all refund items
+                filterRefundItems('all', '');
+            });
         }
     }
+
+    // Filter refund items based on category and search input
+    function filterRefundItems(category, searchValue) {
+        const refundItems = document.querySelectorAll('.refund-item');
+        const refundNoResults = document.querySelector('.refund-no-results');
+        let visibleCount = 0;
+
+        refundItems.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            const refundQuestion = item.querySelector('.refund-question h3');
+            const refundAnswer = item.querySelector('.refund-answer');
+            
+            // Check if the item matches the selected category
+            const categoryMatch = category === 'all' || itemCategory === category;
+            
+            // Check if the item matches the search value
+            const searchMatch = searchValue === '' || 
+                refundQuestion.textContent.toLowerCase().includes(searchValue) || 
+                refundAnswer.textContent.toLowerCase().includes(searchValue);
+            
+            // Show/hide the item based on category and search matches
+            if (categoryMatch && searchMatch) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Show/hide no results message
+        if (refundNoResults) {
+            if (visibleCount === 0) {
+                refundNoResults.style.display = 'block';
+            } else {
+                refundNoResults.style.display = 'none';
+            }
+        }
 }
 
 // Function to initialize share navigation
