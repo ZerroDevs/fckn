@@ -28,11 +28,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Replace API Key in JavaScript
+        run: |
+          sed -i "s/process.env.OPENROUTER_API_KEY/'${{ secrets.OPENROUTER_API_KEY }}'/" chat.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
