@@ -3481,129 +3481,57 @@ body.dark-theme .footer-contact a:hover .footer-contact-icon {
 }
 
 #google_translate_element .goog-te-gadget {
-    font-family: 'Tajawal', sans-serif;
+    font-family: 'Tajawal', sans-serif !important;
+    color: transparent !important;
 }
 
-#google_translate_element .goog-te-gadget-simple {
+#google_translate_element .goog-te-gadget .goog-te-combo {
     background-color: rgba(30, 136, 229, 0.1);
     border: none;
-    padding: 8px 16px;
+    padding: 8px 35px 8px 16px;
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    color: #1e88e5;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e88e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    min-width: 160px;
+    height: 40px;
+    margin: 0;
 }
 
-#google_translate_element .goog-te-gadget-simple:hover {
+#google_translate_element .goog-te-gadget .goog-te-combo:hover {
     background-color: rgba(30, 136, 229, 0.15);
-    transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#google_translate_element .goog-te-gadget-simple img {
-    display: none;
-}
-
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
-    color: #1e88e5;
-    font-size: 0.95rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-}
-
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
-    color: #1e88e5;
-    font-family: 'Tajawal', sans-serif;
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:first-child {
-    position: relative;
-    padding-left: 24px;
-}
-
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:first-child::before {
-    content: '\f0ac';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child {
-    display: none;
-}
-
-/* Dropdown Menu Styling */
-.goog-te-menu2 {
-    border: none !important;
-    padding: 12px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-    background: white !important;
-    top: calc(100% + 8px) !important;
-}
-
-.goog-te-menu2-item div {
-    background: transparent !important;
-    padding: 8px 16px !important;
-    color: #333 !important;
-    font-family: 'Tajawal', sans-serif !important;
-    border-radius: 8px !important;
-    transition: all 0.2s ease !important;
-}
-
-.goog-te-menu2-item:hover div {
-    background: #f0f7ff !important;
-    color: #1e88e5 !important;
-}
-
-.goog-te-menu2-item-selected div {
-    background: #e3f2fd !important;
-    color: #1e88e5 !important;
-    font-weight: 500 !important;
+#google_translate_element .goog-te-gadget .goog-te-combo:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.3);
 }
 
 /* Dark Theme Support */
-body.dark-theme #google_translate_element .goog-te-gadget-simple {
-    background: rgba(66, 165, 245, 0.15);
-}
-
-body.dark-theme #google_translate_element .goog-te-gadget-simple:hover {
-    background: rgba(66, 165, 245, 0.2);
-}
-
-body.dark-theme #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
+body.dark-theme .goog-te-gadget .goog-te-combo {
+    background-color: rgba(66, 165, 245, 0.15);
     color: #90caf9;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2390caf9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
 }
 
-body.dark-theme .goog-te-menu2 {
-    background: #1a1a1a !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+body.dark-theme .goog-te-gadget .goog-te-combo:hover {
+    background-color: rgba(66, 165, 245, 0.2);
 }
 
-body.dark-theme .goog-te-menu2-item div {
-    color: #e0e0e0 !important;
-}
-
-body.dark-theme .goog-te-menu2-item:hover div {
-    background: rgba(66, 165, 245, 0.15) !important;
-    color: #90caf9 !important;
-}
-
-body.dark-theme .goog-te-menu2-item-selected div {
-    background: rgba(66, 165, 245, 0.2) !important;
-    color: #90caf9 !important;
+/* RTL Support */
+html[dir="rtl"] .goog-te-gadget .goog-te-combo {
+    padding: 8px 16px 8px 35px;
+    background-position: left 10px center;
 }
 
 /* Mobile Responsiveness */
@@ -3612,14 +3540,15 @@ body.dark-theme .goog-te-menu2-item-selected div {
         margin: 10px 0;
     }
     
-    #google_translate_element .goog-te-gadget-simple {
+    .goog-te-gadget .goog-te-combo {
         width: 100%;
-        justify-content: center;
+        max-width: 200px;
     }
-    
-    .goog-te-menu2 {
-        max-width: calc(100vw - 32px) !important;
-        left: 16px !important;
-        right: 16px !important;
-    }
+}
+
+/* Hide unwanted elements */
+.goog-te-banner-frame,
+.goog-te-gadget > span,
+.goog-te-gadget > div:not(:has(.goog-te-combo)) {
+    display: none !important;
 }
