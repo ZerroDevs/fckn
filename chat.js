@@ -8,7 +8,7 @@ if (!OPENROUTER_API_KEY) {
     console.error('OpenRouter API key is not configured');
 }
 
-// System prompt that instructs the AI about its role
+// System prompt that instructs the AI about its roles
 const SYSTEM_PROMPT = `You are an intelligent assistant specialized in Saudi Mile Market website. You should:
 
 1. First detect if the message is a greeting if it doesn't contain any of the greetings below just do not respone with greetings and just answer the question.
