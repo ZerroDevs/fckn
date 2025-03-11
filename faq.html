@@ -31,10 +31,12 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'ar',
-                includedLanguages: 'en,ar,de,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                includedLanguages: 'en,ar,de,fr,es',
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+                autoDisplay: false,
                 multilanguagePage: true,
-                gaTrack: true
+                gaTrack: true,
+                gaId: 'UA-XXXXX-X'
             }, 'google_translate_element');
         }
     </script>
