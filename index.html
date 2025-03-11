@@ -70,9 +70,21 @@
                 pageLanguage: 'ar',
                 includedLanguages: 'en,ar,de,fr',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
                 multilanguagePage: true,
-                gaTrack: true
+                gaTrack: true,
+                gaId: 'UA-XXXXX-X'
             }, 'google_translate_element');
+            
+            // Add custom language selector label
+            setTimeout(function() {
+                var translateElement = document.querySelector('.goog-te-gadget-simple .goog-te-menu-value');
+                if (translateElement) {
+                    var langSpan = document.createElement('span');
+                    langSpan.innerHTML = '<i class="fas fa-language"></i>';
+                    translateElement.insertBefore(langSpan, translateElement.firstChild);
+                }
+            }, 1000);
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
