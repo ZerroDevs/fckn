@@ -3598,16 +3598,22 @@ header nav ul li:last-child {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
 }
 
 .chat-toggle i {
     font-size: 20px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chat-toggle:hover {
     transform: scale(1.1);
     background: #1976d2;
+}
+
+.chat-toggle.active i {
+    transform: rotate(360deg);
 }
 
 .chat-container {
@@ -3619,14 +3625,85 @@ header nav ul li:last-child {
     background: white;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    display: none;
+    display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .chat-container.active {
-    display: flex;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: all;
+}
+
+@media (max-width: 768px) {
+    .chat-container {
+        width: calc(100% - 40px);
+        height: 60vh;
+        max-height: 500px;
+        bottom: 80px;
+        transform: translateY(40px) scale(0.9);
+    }
+    
+    .chat-toggle {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .chat-toggle i {
+        font-size: 18px;
+    }
+}
+
+/* Dark theme support */
+body.dark-theme .chat-container {
+    background: #1a1a1a;
+    border: 1px solid #333;
+}
+
+body.dark-theme .chat-input-container {
+    background: #1a1a1a;
+    border-top: 1px solid #333;
+}
+
+body.dark-theme .chat-input {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+body.dark-theme .message.user {
+    background: #1e88e5;
+    color: #fff;
+}
+
+body.dark-theme .message.system {
+    background: #2d2d2d;
+    color: #fff;
+}
+
+body.dark-theme .message.typing {
+    background: #2d2d2d;
+    color: #fff;
+}
+
+/* Add animation keyframes */
+@keyframes chatTogglePulse {
+    0% { box-shadow: 0 2px 10px rgba(30, 136, 229, 0.2); }
+    50% { box-shadow: 0 2px 20px rgba(30, 136, 229, 0.4); }
+    100% { box-shadow: 0 2px 10px rgba(30, 136, 229, 0.2); }
+}
+
+.chat-toggle {
+    animation: chatTogglePulse 2s infinite;
+}
+
+.chat-toggle:hover {
+    animation: none;
 }
 
 .chat-header {
@@ -3708,60 +3785,6 @@ header nav ul li:last-child {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    .chat-container {
-        width: calc(100% - 40px);
-        height: 60vh;
-        max-height: 500px;
-        bottom: 80px;
-    }
-    
-    .chat-toggle {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .chat-toggle i {
-        font-size: 18px;
-    }
-    
-    .message {
-        max-width: 85%;
-    }
-}
-
-/* Dark theme support */
-body.dark-theme .chat-container {
-    background: #1a1a1a;
-    border: 1px solid #333;
-}
-
-body.dark-theme .chat-input-container {
-    background: #222;
-    border-top-color: #333;
-}
-
-body.dark-theme .chat-input {
-    background: #333;
-    border-color: #444;
-    color: #fff;
-}
-
-body.dark-theme .message.user {
-    background: #1e88e5;
-    color: #fff;
-}
-
-body.dark-theme .message.system {
-    background: #333;
-    color: #fff;
-}
-
-body.dark-theme .message.typing {
-    background: #333;
-    color: #888;
 }
 
 /* Package Cards */

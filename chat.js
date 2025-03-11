@@ -1,5 +1,4 @@
 // Constants
-// Constants
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
 const MODEL = 'google/gemini-2.0-pro-exp-02-05:free';
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -8,6 +7,7 @@ const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 if (!OPENROUTER_API_KEY) {
     console.error('OpenRouter API key is not configured');
 }
+
 
 // System prompt that instructs the AI about its role
 const SYSTEM_PROMPT = `أنت مساعد ذكي متخصص حصرياً في موقع Saudi Mile Market. يجب عليك:
@@ -172,23 +172,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(chatWrapper);
 
     // Create chat toggle
-    const chatToggle = document.createElement('div');
+    const chatToggle = document.createElement('button');
     chatToggle.className = 'chat-toggle';
     chatToggle.innerHTML = '<i class="fas fa-comments"></i>';
+    chatToggle.setAttribute('aria-label', 'Toggle chat');
     chatWrapper.appendChild(chatToggle);
 
-    // Create chat container
+    // Create chat container with proper mobile layout
     const chatContainer = document.createElement('div');
     chatContainer.className = 'chat-container';
     chatContainer.innerHTML = `
         <div class="chat-header">
             <h3>المساعد الذكي</h3>
-            <button class="chat-close"><i class="fas fa-times"></i></button>
+            <button class="chat-close" aria-label="Close chat"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-messages"></div>
         <div class="chat-input-container">
             <input type="text" class="chat-input" placeholder="اكتب رسالتك هنا..." dir="rtl">
-            <button class="chat-send" disabled><i class="fas fa-paper-plane"></i></button>
+            <button class="chat-send" disabled aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
         </div>
     `;
     chatWrapper.appendChild(chatContainer);
@@ -203,15 +204,57 @@ document.addEventListener('DOMContentLoaded', () => {
     addMessage('system', 'مرحباً بك! كيف يمكنني مساعدتك اليوم؟', messages);
 
     // Event Listeners
-    chatToggle.addEventListener('click', () => {
+    let isOpen = false;
+
+    function toggleChat() {
+        isOpen = !isOpen;
         chatContainer.classList.toggle('active');
-        if (chatContainer.classList.contains('active')) {
+        chatToggle.classList.toggle('active');
+        
+        if (isOpen) {
             input.focus();
+            // Prevent body scrolling when chat is open on mobile
+            if (window.innerWidth <= 768) {
+                document.body.style.overflow = 'hidden';
+            }
+        } else {
+            document.body.style.overflow = '';
         }
+    }
+
+    chatToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleChat();
     });
 
     closeButton.addEventListener('click', () => {
-        chatContainer.classList.remove('active');
+        if (isOpen) {
+            toggleChat();
+        }
+    });
+
+    // Close chat when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && isOpen) {
+            const isClickInsideChat = chatContainer.contains(e.target) || chatToggle.contains(e.target);
+            if (!isClickInsideChat) {
+                toggleChat();
+            }
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Handle escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+            toggleChat();
+        }
     });
 
     input.addEventListener('input', () => {
