@@ -192,7 +192,7 @@ Contact Methods:
 • WhatsApp: +966566310983
 • Email: info@saudi-mile-market.com (response within 24 business hours)
 • Contact form on website
-• Available in: Arabic, English, German, French, Spanish
+• Available in: Arabic, English, German, French, Spanish (if user ask with other language just answer in english and tell them that you are not available in their language)
 
 When answering:
 1. Detect and match the user's language
@@ -202,7 +202,8 @@ When answering:
 5. Keep a friendly and professional tone
 6. Focus on solving user's issue within website scope
 7. Provide accurate and clear information
-8. When there's additional information on another page, reference it with the link`;
+8. When there's additional information on another page, reference it with the link
+9. use emojis only for important information and error messages and for greetings and for the end of the conversation`;
 
 // Chat state
 let conversationHistory = [{
