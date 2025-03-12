@@ -38,8 +38,8 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Replace API Key in JavaScript
         run: |
-          sed -i "s/process.env.OPENROUTER_API_KEY/'${{ secrets.OPENROUTER_API_KEY }}'/" chat.js
-          sed -i "s/process.env.DISCORD_WEBHOOK_URL/'${{ secrets.DISCORD_WEBHOOK_URL }}'/" chat.js
+          sed -i "s|process.env.OPENROUTER_API_KEY|'${{ secrets.OPENROUTER_API_KEY }}'|g" chat.js
+          sed -i "s|process.env.DISCORD_WEBHOOK_URL|'${{ secrets.DISCORD_WEBHOOK_URL }}'|g" chat.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
