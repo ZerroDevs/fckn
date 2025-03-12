@@ -3,11 +3,15 @@ const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
 const MODEL = 'google/gemini-2.0-pro-exp-02-05:free';
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || '';
-// Add error handling for missing API key
+
+// Add error handling for missing API key and webhook URL
 if (!OPENROUTER_API_KEY) {
     console.error('OpenRouter API key is not configured');
     console.error('Please set the OPENROUTER_API_KEY environment variable');
-    console.error('discord webhook url is not configured');
+}
+
+if (!DISCORD_WEBHOOK_URL) {
+    console.error('Discord webhook URL is not configured');
     console.error('Please set the DISCORD_WEBHOOK_URL environment variable');
 }
 
