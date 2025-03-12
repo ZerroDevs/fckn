@@ -3939,3 +3939,408 @@ body.dark-theme .message.typing {
         max-width: 95%;
     }
 }
+
+.flight-radar {
+    padding: 60px 0;
+    background: var(--bg-light);
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-theme .flight-radar {
+    background: var(--bg-dark);
+}
+
+.flight-radar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    opacity: 0.3;
+}
+
+.map-container {
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.map-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .flight-radar {
+        padding: 40px 0;
+    }
+    
+    .map-container {
+        margin-top: 20px;
+    }
+    
+    .map-container iframe {
+        height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .map-container iframe {
+        height: 300px;
+    }
+}
+
+.flight-radar-widget {
+    position: fixed;
+    top: 50%;
+    right: -400px; /* Start hidden */
+    transform: translateY(-50%);
+    width: 400px;
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+}
+
+.flight-radar-widget.active {
+    right: 0;
+}
+
+.radar-toggle {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    background: #1e88e5;
+    color: white;
+    padding: 15px;
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radar-toggle:hover {
+    padding-right: 20px;
+    background: #1565c0;
+    box-shadow: -3px 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+.radar-toggle i {
+    font-size: 1.2rem;
+    margin-left: 8px;
+    transform-origin: center;
+    animation: flyPlane 3s infinite ease-in-out;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.radar-toggle i.takeoff {
+    animation: planeTakeoff 1s ease-out forwards;
+}
+
+.radar-toggle i.landing {
+    animation: planeLanding 1s ease-in forwards;
+}
+
+@keyframes flyPlane {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-3px) rotate(-5deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(3px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.radar-toggle:hover i {
+    animation: flyPlaneFast 1.5s infinite ease-in-out;
+}
+
+@keyframes flyPlaneFast {
+    0% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateX(3px) translateY(-3px) rotate(-8deg) scale(1.1);
+    }
+    50% {
+        transform: translateX(6px) translateY(0) rotate(0deg) scale(1);
+    }
+    75% {
+        transform: translateX(3px) translateY(3px) rotate(8deg) scale(1.1);
+    }
+    100% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+body.dark-theme .radar-toggle i {
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.2));
+}
+
+.radar-toggle span {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+}
+
+body.dark-theme .radar-toggle {
+    background: #1976d2;
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme .radar-toggle:hover {
+    background: #1565c0;
+    box-shadow: -3px 3px 15px rgba(0, 0, 0, 0.5);
+}
+
+.radar-content {
+    background: #f5f5f5;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 450px;
+}
+
+body.dark-theme .radar-content {
+    background: var(--bg-dark);
+}
+
+.radar-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    position: relative;
+    overflow: hidden;
+}
+
+.radar-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+    animation: radarPulse 3s infinite ease-in-out;
+}
+
+.radar-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.radar-header h3 i {
+    animation: signalPulse 1.5s infinite ease-in-out;
+}
+
+.radar-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+.radar-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+@keyframes radarPulse {
+    0% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+}
+
+@keyframes signalPulse {
+    0% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+}
+
+body.dark-theme .radar-header {
+    background: linear-gradient(135deg, #1976d2, #0d47a1);
+}
+
+.radar-close {
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+body.dark-theme .radar-close {
+    color: var(--text-light);
+}
+
+.radar-close:hover {
+    color: var(--primary);
+}
+
+.map-container {
+    height: calc(100% - 51px);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .flight-radar-widget {
+        width: 300px;
+        right: -300px;
+    }
+
+    .radar-toggle span {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .flight-radar-widget {
+        width: 280px;
+        right: -280px;
+    }
+}
+
+@keyframes planeTakeoff {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translateY(-15px) rotate(-15deg) scale(1.2);
+    }
+    100% {
+        transform: translateY(-30px) rotate(-30deg) scale(0);
+    }
+}
+
+@keyframes planeLanding {
+    0% {
+        transform: translateY(-30px) rotate(-30deg) scale(0);
+    }
+    50% {
+        transform: translateY(-15px) rotate(-15deg) scale(1.2);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+.radar-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+    color: white;
+    font-size: 1.1rem;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    border-radius: 0 0 12px 12px;
+}
+
+.loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+.loading-text {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.loading-text .dots {
+    min-width: 20px;
+    text-align: left;
+}
+
+.retry-btn:hover {
+    background: #f5f5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+[data-theme="dark"] .radar-loader {
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+}
+
+[data-theme="dark"] .retry-btn {
+    background: #2c2c2c;
+    color: #64b5f6;
+}
+
+[data-theme="dark"] .retry-btn:hover {
+    background: #363636;
+}

@@ -38,8 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initial check
         updateHeaderStyle();
     }
+    
+    // Flight Radar Widget
+    initFlightRadar();
 });
-
+        
 // Function to update header style on scroll
     function updateHeaderStyle() {
     const header = document.querySelector('header');
@@ -869,7 +872,8 @@ function loadDynamicFooter() {
                 refundNoResults.style.display = 'none';
             }
         }
-}
+    }
+
 
 // Function to initialize share navigation
 function initShareNavigation() {
@@ -943,4 +947,193 @@ function initShareNavigation() {
             }
         });
     }
-} 
+}
+
+// Flight Radar Widget
+function initFlightRadar() {
+    const radarWidget = document.querySelector('.flight-radar-widget');
+    const radarToggle = document.querySelector('.radar-toggle');
+    const radarClose = document.querySelector('.radar-close');
+    const radarHeader = document.querySelector('.radar-header h3');
+    const mapContainer = document.querySelector('.map-container');
+    const planeIcon = radarToggle.querySelector('i');
+
+    if (radarToggle && radarWidget && radarClose) {
+        // Add live icon to header with pulse animation
+        radarHeader.innerHTML = `<i class="fas fa-signal"></i> ${radarHeader.textContent}`;
+
+        // Toggle radar with animation
+        radarToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            radarWidget.classList.toggle('active');
+            
+            // Add takeoff animation class
+            planeIcon.classList.add('takeoff');
+            setTimeout(() => planeIcon.classList.remove('takeoff'), 1000);
+            
+            // Add ripple effect
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            radarToggle.appendChild(ripple);
+            
+            // Remove ripple after animation
+            setTimeout(() => ripple.remove(), 1000);
+
+            // Animate map container on open
+            if (radarWidget.classList.contains('active')) {
+                mapContainer.style.opacity = '0';
+                setTimeout(() => {
+                    mapContainer.style.opacity = '1';
+                }, 300);
+            }
+        });
+
+        // Close radar with animation
+        radarClose.addEventListener('click', () => {
+            radarWidget.classList.remove('active');
+            planeIcon.classList.add('landing');
+            setTimeout(() => planeIcon.classList.remove('landing'), 1000);
+        });
+
+        // Add loading state with enhanced animation
+        const iframe = mapContainer.querySelector('iframe');
+        if (iframe) {
+            // Show loading indicator with animated dots
+            const loader = document.createElement('div');
+            loader.className = 'radar-loader';
+            loader.innerHTML = `
+                <div class="loader-spinner"></div>
+                <span class="loading-text">جاري تحميل الخريطة<span class="dots">...</span></span>
+            `;
+            mapContainer.appendChild(loader);
+
+            // Animate loading dots
+            const dots = loader.querySelector('.dots');
+            let dotCount = 0;
+            const dotAnimation = setInterval(() => {
+                dotCount = (dotCount + 1) % 4;
+                dots.textContent = '.'.repeat(dotCount);
+            }, 500);
+
+            // Remove loader when iframe loads
+            iframe.addEventListener('load', () => {
+                clearInterval(dotAnimation);
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.remove();
+                    // Add fade-in effect to map
+                    mapContainer.style.opacity = '0';
+                    requestAnimationFrame(() => {
+                        mapContainer.style.opacity = '1';
+                    });
+                }, 300);
+            });
+
+            // Add error handling
+            iframe.addEventListener('error', () => {
+                clearInterval(dotAnimation);
+                loader.innerHTML = `
+                    <i class="fas fa-exclamation-circle" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                    <span>عذراً، حدث خطأ في تحميل الخريطة</span>
+                    <button onclick="location.reload()" class="retry-btn" style="margin-top: 15px; padding: 8px 16px; border-radius: 5px; border: none; background: white; color: #1e88e5; cursor: pointer;">
+                        إعادة المحاولة
+                    </button>
+                `;
+            });
+        }
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!radarWidget.contains(e.target) && !radarToggle.contains(e.target)) {
+                radarWidget.classList.remove('active');
+            }
+        });
+
+        // Add escape key support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && radarWidget.classList.contains('active')) {
+                radarWidget.classList.remove('active');
+            }
+        });
+
+        // Add touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        radarWidget.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        radarWidget.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const isRTL = document.dir === 'rtl';
+            const swipeThreshold = 100;
+            const diff = touchEndX - touchStartX;
+            
+            if (isRTL) {
+                if (diff < -swipeThreshold) {
+                    radarWidget.classList.remove('active');
+                }
+            } else {
+                if (diff > swipeThreshold) {
+                    radarWidget.classList.remove('active');
+                }
+            }
+        }
+    }
+}
+
+// Add these styles to your CSS
+const radarStyles = document.createElement('style');
+radarStyles.textContent = `
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        animation: rippleEffect 1s linear;
+        pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
+    .radar-loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: opacity 0.3s ease;
+        z-index: 2;
+    }
+
+    .loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+        margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(radarStyles); 
