@@ -155,10 +155,11 @@ function initSlider() {
 function loadDynamicFooter() {
     const dynamicFooter = document.getElementById('dynamic-footer');
     if (dynamicFooter) {
+        const basePath = '/images/banks/';
         dynamicFooter.innerHTML = `
             <div class="footer-content">
                 <div class="footer-logo">
-                    <a href="index.html">
+                    <a href="/index.html">
                         <svg width="150" height="50" viewBox="0 0 150 50" xmlns="http://www.w3.org/2000/svg" class="airline-logo">
                             <defs>
                                 <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -183,12 +184,12 @@ function loadDynamicFooter() {
                     <div class="link-group footer-quick-links">
                         <h3>روابط سريعة</h3>
                         <ul>
-                            <li><a href="index.html">الرئيسية</a></li>
-                            <li><a href="index.html#miles">الأميال</a></li>
-                            <li><a href="index.html#contact">اتصل بنا</a></li>
-                            <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                            <li><a href="terms.html">الشروط والأحكام</a></li>
-                            <li><a href="refund.html">سياسة الاسترداد</a></li>
+                            <li><a href="/index.html">الرئيسية</a></li>
+                            <li><a href="/index.html#miles">الأميال</a></li>
+                            <li><a href="/index.html#contact">اتصل بنا</a></li>
+                            <li><a href="/support/faq.html">الأسئلة الشائعة</a></li>
+                            <li><a href="/support/terms.html">الشروط والأحكام</a></li>
+                            <li><a href="/support/refund.html">سياسة الاسترداد</a></li>
                         </ul>
                     </div>
                     
@@ -221,16 +222,16 @@ function loadDynamicFooter() {
             <div class="footer-bottom">
                 <div class="footer-banks">
                     <div class="bank-logo" title="بنك الأهلي">
-                        <img src="../images/banks/alahli.png" alt="بنك الأهلي" />
+                        <img src="${basePath}alahli.png" alt="بنك الأهلي" />
                     </div>
                     <div class="bank-logo" title="بنك الانماء">
-                        <img src="../images/banks/alinma.png" alt="بنك الانماء" />
+                        <img src="${basePath}alinma.png" alt="بنك الانماء" />
                     </div>
                     <div class="bank-logo" title="بنك الراجحي">
-                        <img src="../images/banks/alrajhi.png" alt="بنك الراجحي" />
+                        <img src="${basePath}alrajhi.png" alt="بنك الراجحي" />
                     </div>
                     <div class="bank-logo" title="بنك الرياض">
-                        <img src="../images/banks/riyad.png" alt="بنك الرياض" />
+                        <img src="${basePath}riyad.png" alt="بنك الرياض" />
                     </div>
                 </div>
                 <p>© 2025 سوق الأميال السعودي. جميع الحقوق محفوظة.</p>
