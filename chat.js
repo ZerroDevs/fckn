@@ -1,20 +1,3 @@
-// Constants
-const cxwvrout = process.env.OPENROUTER_API_KEY || '';
-const MODEL = 'google/gemini-2.0-pro-exp-02-05:free';
-const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const cxwvdiesc = process.env.DISCORD_WEBHOOK_URL || '';
-
-// Add error handling for missing API key and webhook URL
-if (!cxwvrout) {
-    console.error('OpenRouter API key is not configured');
-    console.error('Please set the "Cxwvrout" environment variable');
-}
-
-if (!cxwvdiesc) {
-    console.error('Discord webhook URL is not configured');
-    console.error('Please set the "Cxwvdiesc" environment variable');
-}
-
 // System prompt that instructs the AI about its roles
 const SYSTEM_PROMPT = `You are an intelligent assistant specialized in Saudi Mile Market website. You should:
 
@@ -365,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
+const cxwvrout = process.env.OPENROUTER_API_KEY || '';
 // Add message to chat
 function addMessage(role, content, messages) {
     const messageDiv = document.createElement('div');
@@ -402,7 +385,7 @@ function addMessage(role, content, messages) {
     messages.appendChild(messageDiv);
     messages.scrollTop = messages.scrollHeight;
 }
-
+const cxwvdiesc = process.env.DISCORD_WEBHOOK_URL || '';
 // Handle feedback click
 async function handleFeedback(isHelpful, messageContent, helpfulBtn, notHelpfulBtn) {
     // Remove previous selections
@@ -517,7 +500,7 @@ function detectLanguage(text) {
     // Default to English for Latin characters
     return 'en';
 }
-
+const MODEL = 'google/gemini-2.0-pro-exp-02-05:free';
 // Helper function to extract question number from text
 function extractQuestionNumber(text, language) {
     const numberWords = {
@@ -562,6 +545,9 @@ function extractQuestionNumber(text, language) {
 
     return null;
 }
+
+
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 // Update handleSendMessage function to include enhanced language detection
 async function handleSendMessage(input, sendButton, messages) {
@@ -1262,3 +1248,15 @@ const questions = [
 
 suggestionsContainer.appendChild(suggestionsTrack);
 chatHeader.insertAdjacentElement('afterend', suggestionsContainer); 
+
+
+// Add error handling for missing API key and webhook URL
+if (!cxwvrout) {
+    console.error('OpenRouter API key is not configured');
+    console.error('Please set the "Cxwvrout" environment variable');
+}
+
+if (!cxwvdiesc) {
+    console.error('Discord webhook URL is not configured');
+    console.error('Please set the "Cxwvdiesc" environment variable');
+}
