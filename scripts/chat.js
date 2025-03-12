@@ -202,6 +202,8 @@ let conversationHistory = [{
 }];
 
 // Initialize chat interface
+let userMessages = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     // Create chat wrapper
     const chatWrapper = document.createElement('div');
@@ -402,22 +404,26 @@ async function handleFeedback(isHelpful, messageContent, helpfulBtn, notHelpfulB
     // Prepare webhook data
     const webhookData = {
         embeds: [{
-            title: isHelpful ? '✅ Helpful Response' : '❌ Not Helpful Response',
-            description: 'User feedback on chat response',
+            title: isHelpful ? '✅ Helpful Response' : '❌ Not Helpful Response' || '> - No feedback',
+            description: 'User feedback on chat response' || '> - No feedback',
             color: isHelpful ? 0x4CAF50 : 0xF44336, // Green for helpful, red for not helpful
             fields: [
                 {
+                    name: "User Message",
+                    value: userMessages.join('\n') || '> - No user messages'
+                },
+                {
                     name: 'Message Content',
-                    value: messageContent.length > 1024 ? messageContent.substring(0, 1021) + '...' : messageContent
+                    value: messageContent.length > 1024 ? messageContent.substring(0, 1021) + '...' : messageContent || '> - No message content'
                 },
                 {
                     name: 'Feedback',
-                    value: isHelpful ? 'User found this response helpful' : 'User found this response not helpful'
+                    value: isHelpful ? 'User found this response helpful' : 'User found this response not helpful' || '> - No feedback'
                 }
             ],
             timestamp: new Date().toISOString(),
             footer: {
-                text: 'Chat Assistant Feedback'
+                text: 'Chat Assistant Feedback' || '> - No feedback'
             }
         }]
     };
@@ -578,6 +584,7 @@ async function handleSendMessage(input, sendButton, messages) {
 
     // Add user message
     addMessage('user', message, messages);
+    userMessages.push(message);
 
     // Add to conversation history
     conversationHistory.push({
@@ -1252,11 +1259,11 @@ chatHeader.insertAdjacentElement('afterend', suggestionsContainer);
 
 // Add error handling for missing API key and webhook URL
 if (!cxwvrout) {
-    console.error('OpenRouter API key is not configured');
+    console.error('API key is not configured');
     console.error('Please set the "Cxwvrout" environment variable');
 }
 
 if (!cxwvdiesc) {
-    console.error('Discord webhook URL is not configured');
+    console.error('webhook URL is not configured');
     console.error('Please set the "Cxwvdiesc" environment variable');
 }
