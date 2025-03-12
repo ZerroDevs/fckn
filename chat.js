@@ -1,18 +1,18 @@
 // Constants
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
+const cxwvrout = process.env.OPENROUTER_API_KEY || '';
 const MODEL = 'google/gemini-2.0-pro-exp-02-05:free';
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || '';
+const cxwvdiesc = process.env.DISCORD_WEBHOOK_URL || '';
 
 // Add error handling for missing API key and webhook URL
-if (!OPENROUTER_API_KEY) {
+if (!cxwvrout) {
     console.error('OpenRouter API key is not configured');
-    console.error('Please set the OPENROUTER_API_KEY environment variable');
+    console.error('Please set the "Cxwvrout" environment variable');
 }
 
-if (!DISCORD_WEBHOOK_URL) {
+if (!cxwvdiesc) {
     console.error('Discord webhook URL is not configured');
-    console.error('Please set the DISCORD_WEBHOOK_URL environment variable');
+    console.error('Please set the "Cxwvdiesc" environment variable');
 }
 
 // System prompt that instructs the AI about its roles
@@ -441,7 +441,7 @@ async function handleFeedback(isHelpful, messageContent, helpfulBtn, notHelpfulB
 
     // Send feedback to Discord webhook
     try {
-        const response = await fetch(DISCORD_WEBHOOK_URL, {
+        const response = await fetch(cxwvdiesc, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -646,7 +646,7 @@ async function handleSendMessage(input, sendButton, messages) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'Authorization': `Bearer ${cxwvrout}`,
                 'HTTP-Referer': 'https://www.saudi-mile-market.com',
                 'X-Title': 'Saudi Mile Market Assistant'
             },
@@ -870,7 +870,7 @@ async function translateMessage(messageContent, targetLang) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'Authorization': `Bearer ${cxwvrout}`,
                 'HTTP-Referer': 'https://www.saudi-mile-market.com',
                 'X-Title': 'Saudi Mile Market Assistant'
             },
