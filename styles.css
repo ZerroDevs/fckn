@@ -3742,6 +3742,71 @@ body.dark-theme .message.typing {
     padding: 10px 15px;
     border-radius: 15px;
     line-height: 1.4;
+    position: relative;
+}
+
+.message-feedback {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.feedback-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.feedback-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.feedback-btn.selected {
+    border-color: #1e88e5;
+}
+
+.feedback-btn.helpful.selected {
+    background: #e3f2fd;
+    color: #1e88e5;
+}
+
+.feedback-btn.not-helpful.selected {
+    background: #ffebee;
+    color: #e53935;
+}
+
+body.dark-theme .feedback-btn {
+    border-color: #444;
+    color: #aaa;
+}
+
+body.dark-theme .feedback-btn:hover {
+    background: #333;
+}
+
+body.dark-theme .feedback-btn.selected {
+    border-color: #1e88e5;
+}
+
+body.dark-theme .feedback-btn.helpful.selected {
+    background: #0d47a1;
+    color: #fff;
+}
+
+body.dark-theme .feedback-btn.not-helpful.selected {
+    background: #c62828;
+    color: #fff;
 }
 
 .message.user {

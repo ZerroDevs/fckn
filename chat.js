@@ -2,10 +2,13 @@
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
 const MODEL = 'google/gemini-2.0-pro-exp-02-05:free';
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-
+const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || '';
 // Add error handling for missing API key
 if (!OPENROUTER_API_KEY) {
     console.error('OpenRouter API key is not configured');
+    console.error('Please set the OPENROUTER_API_KEY environment variable');
+    console.error('discord webhook url is not configured');
+    console.error('Please set the DISCORD_WEBHOOK_URL environment variable');
 }
 
 // System prompt that instructs the AI about its roles
@@ -363,9 +366,91 @@ document.addEventListener('DOMContentLoaded', () => {
 function addMessage(role, content, messages) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${role}`;
-    messageDiv.innerHTML = formatMessageContent(content);
+    
+    // Create message content wrapper
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'message-content';
+    contentWrapper.innerHTML = formatMessageContent(content);
+    messageDiv.appendChild(contentWrapper);
+
+    // Add feedback buttons for system messages only
+    if (role === 'system') {
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'message-feedback';
+        
+        const helpfulBtn = document.createElement('button');
+        helpfulBtn.className = 'feedback-btn helpful';
+        helpfulBtn.innerHTML = '<i class="fas fa-thumbs-up"></i> مفيد';
+        
+        const notHelpfulBtn = document.createElement('button');
+        notHelpfulBtn.className = 'feedback-btn not-helpful';
+        notHelpfulBtn.innerHTML = '<i class="fas fa-thumbs-down"></i> غير مفيد';
+
+        // Add click handlers
+        helpfulBtn.addEventListener('click', () => handleFeedback(true, content, helpfulBtn, notHelpfulBtn));
+        notHelpfulBtn.addEventListener('click', () => handleFeedback(false, content, helpfulBtn, notHelpfulBtn));
+
+        feedbackDiv.appendChild(helpfulBtn);
+        feedbackDiv.appendChild(notHelpfulBtn);
+        messageDiv.appendChild(feedbackDiv);
+    }
+
     messages.appendChild(messageDiv);
     messages.scrollTop = messages.scrollHeight;
+}
+
+// Handle feedback click
+async function handleFeedback(isHelpful, messageContent, helpfulBtn, notHelpfulBtn) {
+    // Remove previous selections
+    helpfulBtn.classList.remove('selected');
+    notHelpfulBtn.classList.remove('selected');
+    
+    // Add selected class to clicked button
+    if (isHelpful) {
+        helpfulBtn.classList.add('selected');
+    } else {
+        notHelpfulBtn.classList.add('selected');
+    }
+
+    // Prepare webhook data
+    const webhookData = {
+        embeds: [{
+            title: isHelpful ? '✅ Helpful Response' : '❌ Not Helpful Response',
+            description: 'User feedback on chat response',
+            color: isHelpful ? 0x4CAF50 : 0xF44336, // Green for helpful, red for not helpful
+            fields: [
+                {
+                    name: 'Message Content',
+                    value: messageContent.length > 1024 ? messageContent.substring(0, 1021) + '...' : messageContent
+                },
+                {
+                    name: 'Feedback',
+                    value: isHelpful ? 'User found this response helpful' : 'User found this response not helpful'
+                }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: {
+                text: 'Chat Assistant Feedback'
+            }
+        }]
+    };
+
+    // Send feedback to Discord webhook
+    try {
+        const response = await fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(webhookData)
+        });
+
+        if (!response.ok) {
+            console.error('Failed to send feedback to Discord');
+        }
+    } catch (error) {
+        console.error('Error sending feedback:', error);
+    }
 }
 
 // Helper function to detect language
@@ -605,6 +690,10 @@ async function handleSendMessage(input, sendButton, messages) {
         // Remove typing class and cursor when done
         streamingDiv.classList.remove('typing');
         cursor.remove();
+
+        // Replace the streaming message with a permanent one
+        streamingDiv.remove();
+        addMessage('system', streamingContent, messages);
 
         // Add completed message to conversation history
         conversationHistory.push({
